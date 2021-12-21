@@ -73,7 +73,7 @@ float GMath::clamp(float f)
     return f;
 }
 
-QVector3D GMath::clamp(QVector3D v)
+QVector3D GMath::clamp(QVector3D& v)
 {
     float x = clamp(v.x());
     float y = clamp(v.y());
@@ -81,7 +81,7 @@ QVector3D GMath::clamp(QVector3D v)
     return QVector3D(x,y,z);
 }
 
-QVector3D GMath::toVector(QColor c)
+QVector3D GMath::toVector(QColor& c)
 {
     float x = c.redF();
     float y = c.greenF();
@@ -89,7 +89,7 @@ QVector3D GMath::toVector(QColor c)
     return QVector3D(x,y,z);
 }
 
-QColor GMath::toColor(QVector3D v)
+QColor GMath::toColor(QVector3D& v)
 {
     QVector3D cv = clamp(v);
     int r = cv.x()*255;
@@ -98,7 +98,7 @@ QColor GMath::toColor(QVector3D v)
     return QColor(r,g,b);
 }
 
-QVector2D GMath::normalToUv(QVector3D n)
+QVector2D GMath::normalToUv(QVector3D& n)
 {
     float theta = qAcos(n.y()); //(0, pi)
     float phi = qAtan2(n.z(), n.x()); //(-pi, pi]
@@ -106,7 +106,7 @@ QVector2D GMath::normalToUv(QVector3D n)
     return QVector2D(phi/2/G_PI , theta/G_PI);
 }
 
-QVector3D GMath::uvToNormal(QVector2D uv)
+QVector3D GMath::uvToNormal(QVector2D& uv)
 {
     float phi = 2*G_PI*uv.x();
 //    float theta = G_PI*uv.y(); // 非均匀分布
@@ -121,15 +121,18 @@ float GMath::lerp(float a, float b, float p)
     return a + (b-a)*p;
 }
 
-QVector3D GMath::lerp(QVector3D a, QVector3D b, float p)
+QVector3D GMath::lerp(QVector3D& a, QVector3D& b, float p)
 {
     p = GMath::clamp(p);
     return a + (b-a)*p;
 }
 
-QColor GMath::lerp(QColor a, QColor b, float p)
+QColor GMath::lerp(QColor& a, QColor& b, float p)
 {
-    QVector3D v = GMath::lerp(GMath::toVector(a), GMath::toVector(b), p);
+    QVector3D va = GMath::toVector(a);
+    QVector3D vb = GMath::toVector(b);
+
+    QVector3D v = GMath::lerp(va, vb, p);
     float w = GMath::lerp(a.alphaF(), b.alphaF(), p);
     return QColor(v.x()*255, v.y()*255, v.z()*255, w*255);
 }

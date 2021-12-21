@@ -25,7 +25,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         widget.cpp \
-    Math/gmath.cpp
+    Math/gmath.cpp \
+    Math/gray.cpp \
+    Math/ggeometry.cpp \
+    Core/gscene.cpp \
+    Integrators/gintegrator.cpp \
+    Lights/glight.cpp \
+    Core/gprimitive.cpp \
+    Shapes/gshape.cpp \
+    Materials/gmaterial.cpp \
+    Math/gbound3d.cpp
 
 HEADERS  += widget.h \
-    Math/gmath.h
+    Math/gmath.h \
+    Math/gray.h \
+    Math/ggeometry.h \
+    Core/gscene.h \
+    Integrators/gintegrator.h \
+    Lights/glight.h \
+    Core/gprimitive.h \
+    Shapes/gshape.h \
+    Materials/gmaterial.h \
+    Math/gbound3d.h
