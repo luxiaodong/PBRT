@@ -34,7 +34,14 @@ SOURCES += main.cpp\
     Core/gprimitive.cpp \
     Shapes/gshape.cpp \
     Materials/gmaterial.cpp \
-    Math/gbound3d.cpp
+    Math/gbound3d.cpp \
+    Integrators/gsamplerintegrator.cpp \
+    Samplers/gsampler.cpp \
+    Cameras/gcamera.cpp \
+    Integrators/gwhittedintegrator.cpp \
+    Core/gspectrum.cpp \
+    Core/gcolorspace.cpp \
+    Core/gfilm.cpp
 
 HEADERS  += widget.h \
     Math/gmath.h \
@@ -46,4 +53,11 @@ HEADERS  += widget.h \
     Core/gprimitive.h \
     Shapes/gshape.h \
     Materials/gmaterial.h \
-    Math/gbound3d.h
+    Math/gbound3d.h \
+    Integrators/gsamplerintegrator.h \
+    Samplers/gsampler.h \
+    Cameras/gcamera.h \
+    Integrators/gwhittedintegrator.h \
+    Core/gspectrum.h \
+    Core/gcolorspace.h \
+    Core/gfilm.h
