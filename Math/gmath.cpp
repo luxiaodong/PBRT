@@ -73,7 +73,7 @@ float GMath::clamp(float f)
     return f;
 }
 
-QVector3D GMath::clamp(QVector3D& v)
+QVector3D GMath::clamp(const QVector3D& v)
 {
     float x = clamp(v.x());
     float y = clamp(v.y());
@@ -81,7 +81,7 @@ QVector3D GMath::clamp(QVector3D& v)
     return QVector3D(x,y,z);
 }
 
-QVector3D GMath::toVector(QColor& c)
+QVector3D GMath::toVector(const QColor& c)
 {
     float x = c.redF();
     float y = c.greenF();
@@ -89,7 +89,7 @@ QVector3D GMath::toVector(QColor& c)
     return QVector3D(x,y,z);
 }
 
-QColor GMath::toColor(QVector3D& v)
+QColor GMath::toColor(const QVector3D& v)
 {
     QVector3D cv = clamp(v);
     int r = cv.x()*255;
@@ -98,7 +98,7 @@ QColor GMath::toColor(QVector3D& v)
     return QColor(r,g,b);
 }
 
-QVector2D GMath::normalToUv(QVector3D& n)
+QVector2D GMath::normalToUv(const QVector3D& n)
 {
     float theta = qAcos(n.y()); //(0, pi)
     float phi = qAtan2(n.z(), n.x()); //(-pi, pi]
@@ -106,7 +106,7 @@ QVector2D GMath::normalToUv(QVector3D& n)
     return QVector2D(phi/2/G_PI , theta/G_PI);
 }
 
-QVector3D GMath::uvToNormal(QVector2D& uv)
+QVector3D GMath::uvToNormal(const QVector2D& uv)
 {
     float phi = 2*G_PI*uv.x();
 //    float theta = G_PI*uv.y(); // 非均匀分布
@@ -121,13 +121,13 @@ float GMath::lerp(float a, float b, float p)
     return a + (b-a)*p;
 }
 
-QVector3D GMath::lerp(QVector3D& a, QVector3D& b, float p)
+QVector3D GMath::lerp(const QVector3D& a,const QVector3D& b, float p)
 {
     p = GMath::clamp(p);
     return a + (b-a)*p;
 }
 
-QColor GMath::lerp(QColor& a, QColor& b, float p)
+QColor GMath::lerp(const QColor& a,const QColor& b, float p)
 {
     QVector3D va = GMath::toVector(a);
     QVector3D vb = GMath::toVector(b);
@@ -137,4 +137,18 @@ QColor GMath::lerp(QColor& a, QColor& b, float p)
     return QColor(v.x()*255, v.y()*255, v.z()*255, w*255);
 }
 
+QVector3D GMath::min(const QVector3D& a,const QVector3D& b)
+{
+    float x = qMin(a.x(), b.x());
+    float y = qMin(a.y(), b.y());
+    float z = qMin(a.z(), b.z());
+    return QVector3D(x,y,z);
+}
 
+QVector3D GMath::max(const QVector3D& a,const QVector3D& b)
+{
+    float x = qMax(a.x(), b.x());
+    float y = qMax(a.y(), b.y());
+    float z = qMax(a.z(), b.z());
+    return QVector3D(x,y,z);
+}

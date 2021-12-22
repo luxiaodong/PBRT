@@ -1,8 +1,8 @@
 #ifndef GCAMERA_H
 #define GCAMERA_H
 
+#include "Core/gray.h"
 #include "Core/gfilm.h"
-#include "Math/gray.h"
 #include "Samplers/gsampler.h"
 
 class GCamera

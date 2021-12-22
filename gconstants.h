@@ -17,6 +17,9 @@
 #include <QtMath>
 #include <QImage>
 #include <QPainter>
+#include <QList>
+
+// Infinity = std::numeric_limits<Float>::infinity();
 
 const QSize g_resolution = QSize(700, 700);
 const QRectF g_viewPort = QRectF(0,0,1,1);

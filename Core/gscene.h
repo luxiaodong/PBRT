@@ -1,11 +1,11 @@
 #ifndef GSCENE_H
 #define GSCENE_H
 
-#include <QList>
+#include "gconstants.h"
 #include "Lights/glight.h"
 #include "Core/gprimitive.h"
 #include "Math/gbound3d.h"
-#include "Math/gray.h"
+#include "Core/gray.h"
 
 class GScene
 {

@@ -26,8 +26,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         widget.cpp \
     Math/gmath.cpp \
-    Math/gray.cpp \
-    Math/ggeometry.cpp \
+    Core/gray.cpp \
+    Core/ggeometry.cpp \
     Core/gscene.cpp \
     Integrators/gintegrator.cpp \
     Lights/glight.cpp \
@@ -41,12 +41,13 @@ SOURCES += main.cpp\
     Integrators/gwhittedintegrator.cpp \
     Core/gspectrum.cpp \
     Core/gcolorspace.cpp \
-    Core/gfilm.cpp
+    Core/gfilm.cpp \
+    Core/graydifferential.cpp
 
 HEADERS  += widget.h \
     Math/gmath.h \
-    Math/gray.h \
-    Math/ggeometry.h \
+    Core/gray.h \
+    Core/ggeometry.h \
     Core/gscene.h \
     Integrators/gintegrator.h \
     Lights/glight.h \
@@ -61,4 +62,5 @@ HEADERS  += widget.h \
     Core/gspectrum.h \
     Core/gcolorspace.h \
     Core/gfilm.h \
-    gconstants.h
+    gconstants.h \
+    Core/graydifferential.h
