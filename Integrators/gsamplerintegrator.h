@@ -9,13 +9,14 @@ class GSamplerIntegrator : public GIntegrator
 {
 public:
     GSamplerIntegrator();
+    GSamplerIntegrator(GSampler* sample, GCamera* camera);
 
-    virtual void render(const GScene &scene, QImage &image);
+    virtual void render(const GScene &scene);
     virtual ~GSamplerIntegrator();
 
 public:
-    GSampler m_sampler;
-    GCamera m_camera;
+    GSampler* m_sampler;
+    GCamera* m_camera;
 };
 
 #endif // GSAMPLERINTEGRATOR_H

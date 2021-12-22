@@ -60,4 +60,5 @@ HEADERS  += widget.h \
     Integrators/gwhittedintegrator.h \
     Core/gspectrum.h \
     Core/gcolorspace.h \
-    Core/gfilm.h
+    Core/gfilm.h \
+    gconstants.h

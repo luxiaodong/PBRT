@@ -1,10 +1,13 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
-#include <QString>
-#include <QWidget>
-#include <QPaintEvent>
+#include "gconstants.h"
 #include "Core/gscene.h"
+#include "Integrators/gintegrator.h"
+#include "Integrators/gsamplerintegrator.h"
+#include "Cameras/gcamera.h"
+#include "Core/gfilm.h"
+#include "Samplers/gsampler.h"
 
 class Widget : public QWidget
 {
@@ -20,6 +23,11 @@ protected:
 private:
     void parsePbrtFile(GScene&);
     void renderToImage(QImage&);
+
+private:
+    GIntegrator* createIntegrator();
+    GCamera* createCamera();
+    GSampler* createSampler();
 
 private:
     int m_width;

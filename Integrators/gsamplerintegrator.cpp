@@ -4,7 +4,13 @@ GSamplerIntegrator::GSamplerIntegrator()
 {
 }
 
-void GSamplerIntegrator::render(const GScene &scene, QImage &image)
+GSamplerIntegrator::GSamplerIntegrator(GSampler* sample, GCamera* camera)
+{
+    m_sampler = sample;
+    m_camera = camera;
+}
+
+void GSamplerIntegrator::render(const GScene &scene)
 {
 }
 

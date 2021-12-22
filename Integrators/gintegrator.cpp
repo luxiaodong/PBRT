@@ -5,9 +5,9 @@ GIntegrator::GIntegrator()
 
 }
 
-void GIntegrator::render(const GScene &scene, QImage &image)
+void GIntegrator::render(const GScene &scene)
 {
-    image.fill(Qt::black);
+    // image.fill(Qt::black);
 }
 
 GIntegrator::~GIntegrator()

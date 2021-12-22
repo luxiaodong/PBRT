@@ -9,7 +9,7 @@ class GIntegrator
 public:
     GIntegrator();
 
-    virtual void render(const GScene &scene, QImage &image);
+    virtual void render(const GScene &scene);
     virtual ~GIntegrator();
 };
 

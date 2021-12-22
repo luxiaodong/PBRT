@@ -1,11 +1,4 @@
 #include "widget.h"
-
-#include <QImage>
-#include <QPainter>
-#include <QRectF>
-#include <QColor>
-#include <QDebug>
-
 #include "Core/gscene.h"
 #include "Integrators/gintegrator.h"
 
@@ -25,8 +18,8 @@ void Widget::renderToImage(QImage& image)
     GScene scene;
     this->parsePbrtFile(scene);
 
-    GIntegrator integrator;
-    integrator.render(scene, image);
+    GIntegrator* integrator = this->createIntegrator();
+    integrator->render(scene);
 }
 
 void Widget::paintEvent(QPaintEvent *)
@@ -42,7 +35,33 @@ void Widget::paintEvent(QPaintEvent *)
     }
 }
 
+//---------------------------------------------------------------------
+GIntegrator* Widget::createIntegrator()
+{
+    GCamera* camera = this->createCamera();
+    GSampler* sample = this->createSampler();
+
+    //
+    GIntegrator* integrator = new GSamplerIntegrator(sample, camera);
+    return integrator;
+}
+
+GCamera* Widget::createCamera()
+{
+    // filmParams
+    GFilm* film = new GFilm(g_resolution, g_viewPort);
+
+    // cameraParams
+    GCamera* camera = new GCamera(film);
+    return camera;
+}
+
+GSampler* Widget::createSampler()
+{
+    GSampler* sample = new GSampler();
+    return sample;
+}
+
 Widget::~Widget()
 {
-
 }

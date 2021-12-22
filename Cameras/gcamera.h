@@ -9,11 +9,12 @@ class GCamera
 {
 public:
     GCamera();
+    GCamera(GFilm* film);
 
     bool generateRay(const GSampler &sample, GRay& ray);
 
 public:
-    GFilm m_film;
+    GFilm* m_film;
 };
 
 #endif // GCAMERA_H
