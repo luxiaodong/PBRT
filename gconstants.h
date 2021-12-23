@@ -18,6 +18,7 @@
 #include <QImage>
 #include <QPainter>
 #include <QList>
+#include <QGenericMatrix>
 
 // Infinity = std::numeric_limits<Float>::infinity();
 

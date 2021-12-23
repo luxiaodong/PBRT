@@ -42,7 +42,8 @@ SOURCES += main.cpp\
     Core/gspectrum.cpp \
     Core/gcolorspace.cpp \
     Core/gfilm.cpp \
-    Core/graydifferential.cpp
+    Core/graydifferential.cpp \
+    Core/ganimatedtransform.cpp
 
 HEADERS  += widget.h \
     Math/gmath.h \
@@ -63,4 +64,5 @@ HEADERS  += widget.h \
     Core/gcolorspace.h \
     Core/gfilm.h \
     gconstants.h \
-    Core/graydifferential.h
+    Core/graydifferential.h \
+    Core/ganimatedtransform.h

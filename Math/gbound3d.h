@@ -10,7 +10,7 @@ class GBound3D
 public:
     GBound3D();
     GBound3D(const QVector3D &p1, const QVector3D &p2);
-    static GBound3D Union(const GBound3D& b1, const GBound3D& b2);
+    static GBound3D unionBound(const GBound3D& b1, const GBound3D& b2);
     static bool overlaps(const GBound3D& b1, const GBound3D& b2);
 
     QVector3D corner(int index) const;
@@ -26,6 +26,7 @@ public:
     QVector3D lerp(float p) const;
     QVector3D offset(const QVector3D p) const;
 
+    GBound3D transform(const QMatrix4x4& m) const;
 public:
     QVector3D m_min;
     QVector3D m_max;

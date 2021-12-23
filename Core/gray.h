@@ -2,12 +2,15 @@
 #define GRAY_H
 
 #include <QVector3D>
+#include <QMatrix4x4>
 
 class GRay
 {
 public:
+    GRay();
     GRay(const QVector3D& origin, const QVector3D& direction);
     QVector3D operator()(float t);
+    GRay transform(const QMatrix4x4& m);
 
 public:
     QVector3D m_origin;

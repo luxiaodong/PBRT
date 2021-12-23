@@ -13,7 +13,7 @@ GBound3D::GBound3D(const QVector3D &p1, const QVector3D &p2)
     m_max = GMath::max(p1, p2);
 }
 
-GBound3D GBound3D::Union(const GBound3D& b1, const GBound3D& b2)
+GBound3D GBound3D::unionBound(const GBound3D& b1, const GBound3D& b2)
 {
     GBound3D b;
     b.m_min = GMath::min(b1.m_min, b2.m_min);
@@ -106,4 +106,22 @@ bool GBound3D::intersectP(const GRay& ray, float* hitt0, float* hitt1) const
     if(hitt0) *hitt0 = t0;
     if(hitt1) *hitt1 = t1;
     return true;
+}
+
+GBound3D GBound3D::transform(const QMatrix4x4& m) const
+{
+    // 8个顶点取最大值,最小值
+    QVector3D min = m * this->corner(0);
+    QVector3D max = min;
+    for(int i = 1; i < 8; ++i)
+    {
+        QVector3D v = m * this->corner(i);
+        min = GMath::min(min, v);
+        max = GMath::max(max, v);
+    }
+
+    GBound3D b;
+    b.m_min = min;
+    b.m_max = max;
+    return b;
 }
