@@ -10,8 +10,8 @@ public:
     GPrimitive();
 
 public:
-    GShape m_shape;
-    GMaterial m_material;
+    GShape* m_shape;
+    GMaterial* m_material;
 };
 
 #endif // GPRIMITIVE_H

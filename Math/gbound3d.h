@@ -19,6 +19,7 @@ public:
     float surfaceArea() const;
 
     bool intersectP(const GRay& ray, float* hitt0 = NULL, float* hitt1 = NULL) const;
+    bool intersectP(const GRay& ray, const QVector3D& invDIr, const int dirInNeg[3]) const;
     bool inside(const QVector3D& p) const;
     // InsideExclusive
 

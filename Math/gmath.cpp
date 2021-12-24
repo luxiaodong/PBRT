@@ -66,11 +66,16 @@ qDebug()<<q2.toRotationMatrix();
 qDebug()<<m;
 }
 
+float GMath::clamp(float a, float b, float t)
+{
+    if(t < a) return a;
+    if(t > b) return b;
+    return t;
+}
+
 float GMath::clamp(float f)
 {
-    if(f < 0) return 0;
-    if(f > 1) return 1;
-    return f;
+    return clamp(0.0f, 1.0f, f);
 }
 
 QVector3D GMath::clamp(const QVector3D& v)

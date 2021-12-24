@@ -43,7 +43,10 @@ SOURCES += main.cpp\
     Core/gcolorspace.cpp \
     Core/gfilm.cpp \
     Core/graydifferential.cpp \
-    Core/ganimatedtransform.cpp
+    Core/ganimatedtransform.cpp \
+    Interactions/ginteraction.cpp \
+    Interactions/gsurfaceinteraction.cpp \
+    Shapes/gsphere.cpp
 
 HEADERS  += widget.h \
     Math/gmath.h \
@@ -65,4 +68,7 @@ HEADERS  += widget.h \
     Core/gfilm.h \
     gconstants.h \
     Core/graydifferential.h \
-    Core/ganimatedtransform.h
+    Core/ganimatedtransform.h \
+    Interactions/ginteraction.h \
+    Interactions/gsurfaceinteraction.h \
+    Shapes/gsphere.h

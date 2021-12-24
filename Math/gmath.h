@@ -17,8 +17,9 @@ public:
     GMath();
     static void testDecompositionTRS();
 
-    static QVector3D clamp(const QVector3D&);
     static float clamp(float);
+    static float clamp(float a, float b, float t);
+    static QVector3D clamp(const QVector3D&);
     static QVector3D toVector(const QColor&);
     static QColor toColor(const QVector3D&);
 

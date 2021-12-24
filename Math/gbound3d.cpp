@@ -108,6 +108,11 @@ bool GBound3D::intersectP(const GRay& ray, float* hitt0, float* hitt1) const
     return true;
 }
 
+bool GBound3D::intersectP(const GRay& ray, const QVector3D& invDIr, const int dirInNeg[3]) const
+{
+    return false;
+}
+
 GBound3D GBound3D::transform(const QMatrix4x4& m) const
 {
     // 8个顶点取最大值,最小值
