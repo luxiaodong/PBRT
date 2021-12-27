@@ -46,7 +46,9 @@ SOURCES += main.cpp\
     Core/ganimatedtransform.cpp \
     Interactions/ginteraction.cpp \
     Interactions/gsurfaceinteraction.cpp \
-    Shapes/gsphere.cpp
+    Shapes/gsphere.cpp \
+    Shapes/gcylinder.cpp \
+    Shapes/gdisk.cpp
 
 HEADERS  += widget.h \
     Math/gmath.h \
@@ -71,4 +73,6 @@ HEADERS  += widget.h \
     Core/ganimatedtransform.h \
     Interactions/ginteraction.h \
     Interactions/gsurfaceinteraction.h \
-    Shapes/gsphere.h
+    Shapes/gsphere.h \
+    Shapes/gcylinder.h \
+    Shapes/gdisk.h
