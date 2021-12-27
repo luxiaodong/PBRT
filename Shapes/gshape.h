@@ -17,7 +17,7 @@ public:
     virtual GBound3D worldBound() const;
     virtual bool intersect(const GRay &ray, float *tHit, GSurfaceInteraction *isect, bool testAlphaTexture = true) const = 0;
     virtual bool intersectP(const GRay &ray, bool testAlphaTexture = true) const;
-    virtual bool area() const = 0;
+    virtual float area() const = 0;
     virtual GInteraction sample(const QVector2D& u, float* pdf) const = 0;
     virtual GInteraction sample(const GInteraction& ref, const QVector2D& u, float* pdf) const;
     virtual float pdf(const GInteraction& ref) const;

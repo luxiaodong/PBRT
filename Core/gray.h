@@ -9,8 +9,8 @@ class GRay
 public:
     GRay();
     GRay(const QVector3D& origin, const QVector3D& direction);
-    QVector3D operator()(float t);
-    GRay transform(const QMatrix4x4& m);
+    QVector3D operator()(float t) const;
+    GRay transform(const QMatrix4x4& m) const;
 
 public:
     QVector3D m_origin;

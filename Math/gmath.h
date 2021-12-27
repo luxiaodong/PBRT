@@ -32,6 +32,8 @@ public:
 
     static QVector3D min(const QVector3D& a,const QVector3D& b);
     static QVector3D max(const QVector3D& a,const QVector3D& b);
+
+    static bool quadratic(float a, float b, float c, float& t0, float& t1);
 };
 
 #endif // GMATH_H

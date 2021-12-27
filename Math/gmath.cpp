@@ -157,3 +157,14 @@ QVector3D GMath::max(const QVector3D& a,const QVector3D& b)
     float z = qMax(a.z(), b.z());
     return QVector3D(x,y,z);
 }
+
+bool GMath::quadratic(float a, float b, float c, float& t0, float& t1)
+{
+    float delta = b*b - 4*a*c;
+    if(delta < 0) return false;
+
+    t0 = (-b-qSqrt(delta))/(2*a);
+    t1 = (-b+qSqrt(delta))/(2*a);
+    if(t0 > t1) qSwap(t0, t1);
+    return true;
+}
