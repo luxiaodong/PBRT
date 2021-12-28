@@ -48,7 +48,13 @@ SOURCES += main.cpp\
     Interactions/gsurfaceinteraction.cpp \
     Shapes/gsphere.cpp \
     Shapes/gcylinder.cpp \
-    Shapes/gdisk.cpp
+    Shapes/gdisk.cpp \
+    Shapes/gcone.cpp \
+    Shapes/gparaboloid.cpp \
+    Shapes/ghyperboloid.cpp \
+    Shapes/gtrianglemesh.cpp \
+    Shapes/gtriangle.cpp \
+    Shapes/gcurve.cpp
 
 HEADERS  += widget.h \
     Math/gmath.h \
@@ -75,4 +81,10 @@ HEADERS  += widget.h \
     Interactions/gsurfaceinteraction.h \
     Shapes/gsphere.h \
     Shapes/gcylinder.h \
-    Shapes/gdisk.h
+    Shapes/gdisk.h \
+    Shapes/gcone.h \
+    Shapes/gparaboloid.h \
+    Shapes/ghyperboloid.h \
+    Shapes/gtrianglemesh.h \
+    Shapes/gtriangle.h \
+    Shapes/gcurve.h

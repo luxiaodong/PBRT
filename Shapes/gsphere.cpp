@@ -56,11 +56,12 @@ bool GSphere::intersect(const GRay &ray, float *tHit, GSurfaceInteraction *isect
 
     if(t0 > objRay.m_max || t1 < 0) return false;
     float hitT;
-    if(t0 > 0 && this->isValidPointInSphere(objRay(t0)))
+    float phi;
+    if(t0 > 0 && this->isValidPointInSphere(objRay(t0), phi))
     {
         hitT = t0;
     }
-    else if(t1 < objRay.m_max && this->isValidPointInSphere(objRay(t1)))
+    else if(t1 < objRay.m_max && this->isValidPointInSphere(objRay(t1), phi))
     {
         hitT = t1;
     }
@@ -70,7 +71,17 @@ bool GSphere::intersect(const GRay &ray, float *tHit, GSurfaceInteraction *isect
     }
 
     QVector3D hitPoint = objRay(hitT);
-    // 计算该点的偏导数
+    // 计算该点的偏导数, uv要在(0,1)内
+    // u: 0 < phi < phiMax
+    // v: zMin < cos(theta) < zMax
+    float u = phi/m_phiMax;
+    float theta = qAcos( GMath::clamp(hitPoint.z()/m_radius) );
+    float v = (theta - m_thetaMin)/(m_thetaMax - m_thetaMin);
+    float zRadius = qSqrt(hitPoint.x()*hitPoint.x() + hitPoint.y()*hitPoint.y());
+    float cosPhi = hitPoint.x()/zRadius;
+    float sinPhi = hitPoint.y()/zRadius;
+    QVector3D dpdu( (-m_phiMax) * hitPoint.y(), m_phiMax * hitPoint.x(), 0);
+    QVector3D dpdv = (m_thetaMax - m_thetaMin) * QVector3D(hitPoint.z()*cosPhi, hitPoint.z()*sinPhi, -m_radius*qSin(theta));
     return true;
 }
 
@@ -106,9 +117,9 @@ float GSphere::solidAngle(const QVector3D &p, int nSamples) const
     return 0.0f;
 }
 
-bool GSphere::isValidPointInSphere(const QVector3D p) const
+bool GSphere::isValidPointInSphere(const QVector3D p, float& phi) const
 {
-    float phi = qAtan2(p.y(), p.x());
+    phi = qAtan2(p.y(), p.x());
     if(phi < 0) phi += 2*M_PI;
 
     if(phi < m_phiMax && m_zMin < p.z() && p.z() < m_zMax)

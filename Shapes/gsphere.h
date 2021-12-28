@@ -19,7 +19,7 @@ public:
     float solidAngle(const QVector3D &p, int nSamples = 512) const;
 
 private:
-    bool isValidPointInSphere(const QVector3D p) const;
+    bool isValidPointInSphere(const QVector3D p, float& phi) const;
 
 public:
     const float m_radius;
