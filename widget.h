@@ -1,7 +1,7 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
-#include "gconstants.h"
+#include "qtinclude.h"
 #include "Core/gscene.h"
 #include "Integrators/gintegrator.h"
 #include "Integrators/gsamplerintegrator.h"

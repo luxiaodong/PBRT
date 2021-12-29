@@ -1,12 +1,13 @@
 #ifndef GSHAPE_H
 #define GSHAPE_H
 
-#include "gconstants.h"
+#include "qtinclude.h"
 #include "Math/gmath.h"
 #include "Math/gbound3d.h"
 #include "Interactions/ginteraction.h"
 #include "Interactions/gsurfaceinteraction.h"
 
+class GSurfaceInteraction;
 class GShape
 {
     static int m_shapeCount;

@@ -1,11 +1,7 @@
 #include "gfilm.h"
 
-GFilm::GFilm()
-{
-
-}
-
-GFilm::GFilm(const QSize& resolution, const QRectF& cropWindow) : m_fullResolution(resolution)
+GFilm::GFilm(const QSize& resolution, const QRectF& cropWindow, GFilter* filter, float diagonal, int scale, float maxSampleLuminance)
+    :m_fullResolution(resolution), m_filter(filter), m_diagonal(diagonal),m_scale(scale),m_maxSampleLuminance(maxSampleLuminance)
 {
     int left = qFloor( m_fullResolution.width() * cropWindow.x() );
     int bottom = qFloor( m_fullResolution.height() * cropWindow.y() );

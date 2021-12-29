@@ -1,7 +1,7 @@
 #ifndef GTRIANGLEMESH_H
 #define GTRIANGLEMESH_H
 
-#include "gconstants.h"
+#include "qtinclude.h"
 
 class GTriangleMesh
 {

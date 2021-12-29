@@ -54,7 +54,16 @@ SOURCES += main.cpp\
     Shapes/ghyperboloid.cpp \
     Shapes/gtrianglemesh.cpp \
     Shapes/gtriangle.cpp \
-    Shapes/gcurve.cpp
+    Shapes/gcurve.cpp \
+    Core/goptions.cpp \
+    Medium/gmedium.cpp \
+    Core/gmemoryarena.cpp \
+    Medium/gmediuminterface.cpp \
+    Interactions/gmediuminteraction.cpp \
+    Medium/gphasefunction.cpp \
+    Core/gcreatefactory.cpp \
+    Filter/gfilter.cpp \
+    Filter/gboxfilter.cpp
 
 HEADERS  += widget.h \
     Math/gmath.h \
@@ -74,7 +83,6 @@ HEADERS  += widget.h \
     Core/gspectrum.h \
     Core/gcolorspace.h \
     Core/gfilm.h \
-    gconstants.h \
     Core/graydifferential.h \
     Core/ganimatedtransform.h \
     Interactions/ginteraction.h \
@@ -87,4 +95,14 @@ HEADERS  += widget.h \
     Shapes/ghyperboloid.h \
     Shapes/gtrianglemesh.h \
     Shapes/gtriangle.h \
-    Shapes/gcurve.h
+    Shapes/gcurve.h \
+    Core/goptions.h \
+    qtinclude.h \
+    Medium/gmedium.h \
+    Core/gmemoryarena.h \
+    Medium/gmediuminterface.h \
+    Interactions/gmediuminteraction.h \
+    Medium/gphasefunction.h \
+    Core/gcreatefactory.h \
+    Filter/gfilter.h \
+    Filter/gboxfilter.h

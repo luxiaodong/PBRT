@@ -1,6 +1,7 @@
 #include "widget.h"
 #include "Core/gscene.h"
 #include "Integrators/gintegrator.h"
+#include "Core/goptions.h"
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent) , m_width(600) , m_height(600) , m_drawOnce(0)
@@ -15,11 +16,11 @@ void Widget::parsePbrtFile(GScene& scene)
 
 void Widget::renderToImage(QImage& image)
 {
-    GScene scene;
-    this->parsePbrtFile(scene);
+//    GScene scene;
+//    this->parsePbrtFile(scene);
 
-    GIntegrator* integrator = this->createIntegrator();
-    integrator->render(scene);
+//    GIntegrator* integrator = this->createIntegrator();
+//    integrator->render(scene);
 }
 
 void Widget::paintEvent(QPaintEvent *)
@@ -49,11 +50,13 @@ GIntegrator* Widget::createIntegrator()
 GCamera* Widget::createCamera()
 {
     // filmParams
-    GFilm* film = new GFilm(g_resolution, g_viewPort);
+//    GFilm* film = new GFilm(GOptions::film_resolution, GOptions::film_viewPort);
 
     // cameraParams
-    GCamera* camera = new GCamera(film);
-    return camera;
+    // GCamera(const GAnimatedTransform& cameraToWorld, float shutterOpen, float shutterClose, GFilm *film, const GMedium* medium);
+//    GCamera* camera = new GCamera(film);
+//    return camera;
+    return NULL;
 }
 
 GSampler* Widget::createSampler()

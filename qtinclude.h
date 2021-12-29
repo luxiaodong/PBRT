@@ -1,5 +1,5 @@
-#ifndef GCONSTANTS_H
-#define GCONSTANTS_H
+#ifndef QTINCLUDE_H
+#define QTINCLUDE_H
 
 #include <QString>
 #include <QWidget>
@@ -20,9 +20,6 @@
 #include <QList>
 #include <QGenericMatrix>
 
-// Infinity = std::numeric_limits<Float>::infinity();
+class GVisibilityTester{};
 
-const QSize g_resolution = QSize(700, 700);
-const QRectF g_viewPort = QRectF(0,0,1,1);
-
-#endif // GCONSTANTS_H
+#endif // QTINCLUDE_H

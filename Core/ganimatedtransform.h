@@ -1,7 +1,7 @@
 #ifndef GANIMATEDTRANSFORM_H
 #define GANIMATEDTRANSFORM_H
 
-#include "gconstants.h"
+#include "qtinclude.h"
 #include "Math/gmath.h"
 #include "Math/gbound3d.h"
 

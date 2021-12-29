@@ -1,7 +1,7 @@
 #ifndef GSCENE_H
 #define GSCENE_H
 
-#include "gconstants.h"
+#include "qtinclude.h"
 #include "Lights/glight.h"
 #include "Core/gprimitive.h"
 #include "Math/gbound3d.h"
