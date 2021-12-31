@@ -19,6 +19,10 @@
 #include <QPainter>
 #include <QList>
 #include <QGenericMatrix>
+#include <QFile>
+#include <QTextStream>
+#include <QStringList>
+#include <QChar>
 
 class GVisibilityTester{};
 

@@ -2,6 +2,7 @@
 #include "Core/gscene.h"
 #include "Integrators/gintegrator.h"
 #include "Core/goptions.h"
+#include "Core/gparsepbrt.h"
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent) , m_width(600) , m_height(600) , m_drawOnce(0)
@@ -12,12 +13,14 @@ Widget::Widget(QWidget *parent)
 void Widget::parsePbrtFile(GScene& scene)
 {
     QString filePath("/Users/luxiaodong/Project/Temp/pbrt-v3/scenes/killeroo-simple.pbrt");
+    GParsePbrt pbrt;
+    pbrt.parse(filePath);
 }
 
 void Widget::renderToImage(QImage& image)
 {
-//    GScene scene;
-//    this->parsePbrtFile(scene);
+    GScene scene;
+    this->parsePbrtFile(scene);
 
 //    GIntegrator* integrator = this->createIntegrator();
 //    integrator->render(scene);

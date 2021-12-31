@@ -63,7 +63,8 @@ SOURCES += main.cpp\
     Medium/gphasefunction.cpp \
     Core/gcreatefactory.cpp \
     Filter/gfilter.cpp \
-    Filter/gboxfilter.cpp
+    Filter/gboxfilter.cpp \
+    Core/gparsepbrt.cpp
 
 HEADERS  += widget.h \
     Math/gmath.h \
@@ -105,4 +106,5 @@ HEADERS  += widget.h \
     Medium/gphasefunction.h \
     Core/gcreatefactory.h \
     Filter/gfilter.h \
-    Filter/gboxfilter.h
+    Filter/gboxfilter.h \
+    Core/gparsepbrt.h
