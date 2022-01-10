@@ -1,8 +1,14 @@
 #include "gparsepbrt.h"
+#include "Core/goptions.h"
 
 GParsePbrt::GParsePbrt()
 {
+    m_textStream = NULL;
+}
 
+GParsePbrt::~GParsePbrt()
+{
+    if(m_textStream) delete m_textStream;
 }
 
 void GParsePbrt::parse(const QString filePath)
@@ -11,10 +17,10 @@ void GParsePbrt::parse(const QString filePath)
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
 
-    QTextStream ts(&file);
-    while( ts.atEnd() == false )
+    m_textStream = new QTextStream(&file);
+    while( m_textStream->atEnd() == false )
     {
-        QString line = ts.readLine();
+        QString line = m_textStream->readLine();
         this->parseLine(line.trimmed());
     }
 }
@@ -26,7 +32,11 @@ void GParsePbrt::parseLine(const QString line)
     QStringList strList = line.split(' ');
     QString firstStr = strList.at(0);
 
-    if(firstChar == 'A')
+    if(firstChar == '#')
+    {
+        qDebug()<<line;
+    }
+    else if(firstChar == 'A')
     {
         if(firstStr == "AttributeBegin")
         {}
@@ -55,12 +65,16 @@ void GParsePbrt::parseLine(const QString line)
     else if(firstChar == "F")
     {
         if(firstStr == "Film")
-        {}
+        {
+            this->parseFilm(line);
+        }
     }
     else if(firstChar == "I")
     {
         if(firstStr == "Integrator")
-        {}
+        {
+            this->parseIntegrator(line);
+        }
         else if(firstStr == "Include")
         {}
         else if(firstStr == "Identity")
@@ -119,7 +133,9 @@ void GParsePbrt::parseLine(const QString line)
         if (firstStr == "Shape")
         {}
         else if(firstStr == "Sampler")
-        {}
+        {
+            this->parseSampler(line);
+        }
         else if(firstStr == "Scale")
         {}
     }
@@ -173,7 +189,7 @@ void GParsePbrt::parseLookAt(const QString line)
                 right.z(), newUp.z(), dir.z(), pos.z(),
                 0.0, 0.0, 0.0, 1.0f);
 
-    qDebug()<<cameraToWorld;
+//    qDebug()<<cameraToWorld;
 }
 
 void GParsePbrt::parseRotate(const QString line)
@@ -184,10 +200,54 @@ void GParsePbrt::parseRotate(const QString line)
     float dy = strList.at(3).toFloat();
     float dz = strList.at(4).toFloat();
     QQuaternion q = QQuaternion::fromAxisAndAngle(QVector3D(dx,dy,dz), angle);
-qDebug()<<q.toRotationMatrix();
+//qDebug()<<q.toRotationMatrix();
 }
 
 void GParsePbrt::parseCamera(const QString line)
 {
+    QStringList strList = line.split('"', QString::SkipEmptyParts);
+    QString cameraType = strList.at(1);
+    GOptions::camera_type = cameraType;
+    // Camera "perspective" "float fov" [39]
+}
 
+void GParsePbrt::parseFilm(const QString line)
+{
+    QStringList strList = line.split(' ', QString::SkipEmptyParts);
+    QString filmType = strList.at(1);
+    GOptions::film_type = filmType;
+
+    QString nextLine =  m_textStream->readLine();
+    QRegExp rx("(\\d+)");
+    QStringList nextList;
+    int pos = 0;
+    while ((pos = rx.indexIn(nextLine, pos)) != -1)
+    {
+        nextList << rx.cap(1);
+        pos += rx.matchedLength();
+    }
+
+    int w = nextList.at(0).toInt();
+    int h = nextList.at(0).toInt();
+    GOptions::film_resolution = QSize(w, h);
+
+    nextLine =  m_textStream->readLine();
+    GOptions::film_cropwindow = QRect(0,0,1,1);
+}
+
+void GParsePbrt::parseSampler(const QString line)
+{
+    QStringList strList = line.split(' ', QString::SkipEmptyParts);
+    QString samplerType = strList.at(1);
+    GOptions::sampler_type = samplerType.remove('"');
+
+    int pixel = strList.last().remove('[').remove(']').toInt();
+    GOptions::sampler_pixel = pixel;
+}
+
+void GParsePbrt::parseIntegrator(const QString line)
+{
+    QStringList strList = line.split(' ', QString::SkipEmptyParts);
+    QString integratorType = strList.at(1);
+    GOptions::integrator_type = integratorType.remove('"');
 }

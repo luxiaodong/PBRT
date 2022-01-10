@@ -7,6 +7,7 @@ class GParsePbrt
 {
 public:
     GParsePbrt();
+    ~GParsePbrt();
     void parse(const QString filePath);
 
 private:
@@ -14,9 +15,12 @@ private:
     void parseLookAt(const QString line);
     void parseRotate(const QString line);
     void parseCamera(const QString line);
+    void parseFilm(const QString line);
+    void parseSampler(const QString line);
+    void parseIntegrator(const QString line);
 
 public:
-
+    QTextStream* m_textStream;
 };
 
 #endif // GPARSEPBRT_H
