@@ -64,7 +64,9 @@ SOURCES += main.cpp\
     Core/gcreatefactory.cpp \
     Filter/gfilter.cpp \
     Filter/gboxfilter.cpp \
-    Core/gparsepbrt.cpp
+    Core/gparsepbrt.cpp \
+    Samplers/gpixelsampler.cpp \
+    gpbrt.cpp
 
 HEADERS  += widget.h \
     Math/gmath.h \
@@ -107,4 +109,6 @@ HEADERS  += widget.h \
     Core/gcreatefactory.h \
     Filter/gfilter.h \
     Filter/gboxfilter.h \
-    Core/gparsepbrt.h
+    Core/gparsepbrt.h \
+    Samplers/gpixelsampler.h \
+    gpbrt.h

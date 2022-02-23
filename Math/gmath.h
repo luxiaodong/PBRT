@@ -34,6 +34,13 @@ public:
     static QVector3D max(const QVector3D& a,const QVector3D& b);
 
     static bool quadratic(float a, float b, float c, float& t0, float& t1);
+    static float randomZeroToOne();
+    static float randomMinusToOne();
+
+    static QMatrix4x4 createWorldToViewMatrix(QVector3D position, float xDegree, float yDegree, float zDegree);
+    static QMatrix4x4 createWorldToViewMatrix(QVector3D position, QVector3D forward, QVector3D up);
+    static QMatrix4x4 createOrthogonalMatrix(float size, float aspect, float n, float f);
+    static QMatrix4x4 createProjectionMatrix(float fov, float aspect, float n, float f);
 };
 
 #endif // GMATH_H

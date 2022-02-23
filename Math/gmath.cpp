@@ -168,3 +168,134 @@ bool GMath::quadratic(float a, float b, float c, float& t0, float& t1)
     if(t0 > t1) qSwap(t0, t1);
     return true;
 }
+
+float GMath::randomZeroToOne()
+{
+    return qrand()/RAND_MAX;
+}
+
+float GMath::randomMinusToOne()
+{
+    return 2.0f*GMath::randomZeroToOne() - 1.0f;
+}
+
+QMatrix4x4 GMath::createWorldToViewMatrix(QVector3D position, float xDegree, float yDegree, float zDegree)
+{
+    float xRadians = qDegreesToRadians(xDegree);
+    float yRadians = qDegreesToRadians(yDegree);
+    float zRadians = qDegreesToRadians(zDegree);
+
+    QMatrix4x4 xMat(
+                1.0,            0.0,             0.0, 0.0,
+                0.0, qCos(xRadians), -qSin(xRadians), 0.0,
+                0.0, qSin(xRadians),  qCos(xRadians), 0.0,
+                0.0,            0.0,             0.0, 1.0
+                );
+
+    QMatrix4x4 yMat(
+                qCos(yRadians),  0.0, qSin(yRadians), 0.0,
+                0.0,             1.0,            0.0, 0.0,
+                -qSin(yRadians), 0.0, qCos(yRadians), 0.0,
+                0.0,             0.0,            0.0, 1.0
+                );
+
+    QMatrix4x4 zMat(
+                qCos(zRadians), -qSin(zRadians), 0.0, 0.0,
+                qSin(zRadians),  qCos(zRadians), 0.0, 0.0,
+                0.0,            0.0,             1.0, 0.0,
+                0.0,            0.0,             0.0, 1.0
+                );
+
+    QMatrix4x4 zflip(
+                1.0, 0.0,  0.0, 0.0,
+                0.0, 1.0,  0.0, 0.0,
+                0.0, 0.0, -1.0, 0.0,
+                0.0, 0.0,  0.0, 1.0
+                );
+
+    QMatrix4x4 pos(
+                1.0, 0.0, 0.0, -position.x(),
+                0.0, 1.0, 0.0, -position.y(),
+                0.0, 0.0, 1.0, -position.z(),
+                0.0, 0.0, 0.0,           1.0
+                );
+
+    QMatrix4x4 xyzMat = yMat*xMat*zMat;
+    QMatrix4x4 mat = zflip*xyzMat.inverted()*pos;
+    return mat;
+}
+
+QMatrix4x4 GMath::createWorldToViewMatrix(QVector3D position, QVector3D forward, QVector3D up)
+{
+    QVector3D right = QVector3D::crossProduct(up, forward).normalized();
+    QVector3D up2 = QVector3D::crossProduct(forward, right).normalized();
+
+    QMatrix4x4 view(
+                right.x(), up2.x(), forward.x(), 0.0,
+                right.y(), up2.y(), forward.y(), 0.0,
+                right.z(), up2.z(), forward.z(), 0.0,
+                      0.0,     0.0,         0.0, 1.0
+                );
+
+    QMatrix4x4 pos(
+                1.0, 0.0, 0.0, -position.x(),
+                0.0, 1.0, 0.0, -position.y(),
+                0.0, 0.0, 1.0, -position.z(),
+                0.0, 0.0, 0.0,           1.0
+                );
+
+    QMatrix4x4 zflip(
+                1.0, 0.0,  0.0, 0.0,
+                0.0, 1.0,  0.0, 0.0,
+                0.0, 0.0, -1.0, 0.0,
+                0.0, 0.0,  0.0, 1.0
+                );
+
+    QMatrix4x4 mat = zflip*view.inverted()*pos;
+    return mat;
+}
+
+QMatrix4x4 GMath::createOrthogonalMatrix(float size, float aspect, float n, float f)
+{
+    QMatrix4x4 mat(
+        1.0f/(aspect*size),      0.0f,          0.0f,          0.0f,
+                0.0f,       1.0f/size,          0.0f,          0.0f,
+                0.0f,            0.0f,       2/(f-n),   (n+f)/(f-n),
+                0.0f,            0.0f,          0.0f,         1.0f);
+
+    QMatrix4x4 zflip(
+                1.0, 0.0,  0.0, 0.0,
+                0.0, 1.0,  0.0, 0.0,
+                0.0, 0.0, -1.0, 0.0,
+                0.0, 0.0,  0.0, 1.0
+                );
+
+    return zflip*mat;
+}
+
+QMatrix4x4 GMath::createProjectionMatrix(float fov, float aspect, float n, float f)
+{
+    // z in [-n,f]
+    float tan = qTan( qDegreesToRadians(fov/2) );
+    QMatrix4x4 mat(
+        1.0f/(aspect*tan),       0.0f,          0.0f,          0.0f,
+                0.0f,        1.0f/tan,          0.0f,          0.0f,
+                0.0f,            0.0f,   (f+n)/(f-n),   2*n*f/(f-n),
+                0.0f,            0.0f,         -1.0f,         0.0f);
+
+    // 逆矩阵.
+    // 1/A
+    //     1/B
+    //          0    -1
+    //          1/D  C/D
+
+    QMatrix4x4 zflip(
+                1.0, 0.0,  0.0, 0.0,
+                0.0, 1.0,  0.0, 0.0,
+                0.0, 0.0, -1.0, 0.0,
+                0.0, 0.0,  0.0, 1.0
+                );
+
+    return zflip*mat;
+}
+

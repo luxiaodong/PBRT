@@ -2,5 +2,7 @@
 
 GSampler::GSampler()
 {
-
 }
+
+GSampler::~GSampler()
+{}

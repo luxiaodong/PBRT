@@ -15,8 +15,8 @@ public:
     virtual ~GSamplerIntegrator();
 
 public:
-    GSampler* m_sampler;
-    GCamera* m_camera;
+    GSampler* m_pSampler;
+    GCamera* m_pCamera;
 };
 
 #endif // GSAMPLERINTEGRATOR_H

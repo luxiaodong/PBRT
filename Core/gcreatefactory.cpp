@@ -15,14 +15,14 @@ GFilter* GCreateFactory::createFilter()
 
 GFilm* GCreateFactory::createFilm()
 {
-    GFilter* filter = GCreateFactory::createFilter();
-    float diagonal = 35.0f;
-    float scale = 1.0f;
-    float maxSampleLuminance = 10000000.0f;
-    return new GFilm(GOptions::film_resolution, GOptions::film_cropwindow, filter, diagonal, scale, maxSampleLuminance);
+//    GFilter* filter = GCreateFactory::createFilter();
+//    float diagonal = 35.0f;
+//    float scale = 1.0f;
+//    float maxSampleLuminance = 10000000.0f;
+//    return new GFilm(GOptions::film_resolution, GOptions::film_cropwindow, filter, diagonal, scale, maxSampleLuminance);
 
 //    return new GFilm(GOptions::film_resolution, GOptions::film_viewPort);
-    // return NULL;
+     return NULL;
 }
 
 GCamera* GCreateFactory::createCamera()
