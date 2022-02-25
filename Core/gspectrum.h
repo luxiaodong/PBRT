@@ -10,4 +10,5 @@ public:
     GSpectrum();
 };
 
+
 #endif // GSPECTRUM_H

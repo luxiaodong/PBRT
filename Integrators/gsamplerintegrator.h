@@ -1,6 +1,7 @@
 #ifndef GSAMPLERINTEGRATOR_H
 #define GSAMPLERINTEGRATOR_H
 
+#include <QColor>
 #include "Integrators/gintegrator.h"
 #include "Samplers/gsampler.h"
 #include "Cameras/gcamera.h"
@@ -12,6 +13,7 @@ public:
     GSamplerIntegrator(GSampler* sample, GCamera* camera);
 
     virtual void render(const GScene &scene);
+    virtual QColor trace(GRay& ray, const GScene &scene);
     virtual ~GSamplerIntegrator();
 
 public:

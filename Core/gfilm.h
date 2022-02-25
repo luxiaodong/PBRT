@@ -26,6 +26,7 @@ class GFilm
 {
 public:
     GFilm();
+    void setPixel(int x, int y, QColor& color);
     void save(QString& filePath);
     QSize& resolution();
 

@@ -1,5 +1,6 @@
 #include "gfilm.h"
 #include <QtDebug>
+#include "Core/gcolorspace.h"
 
 //GFilm::GFilm(const QSize& resolution, const QRectF& cropWindow, GFilter* filter, float diagonal, int scale, float maxSampleLuminance)
 //    :m_fullResolution(resolution), m_filter(filter), m_diagonal(diagonal),m_scale(scale),m_maxSampleLuminance(maxSampleLuminance)
@@ -29,8 +30,15 @@ QSize& GFilm::resolution()
     return m_resolution;
 }
 
+void GFilm::setPixel(int x, int y, QColor& color)
+{
+    m_pImage->setPixelColor(x, y, color);
+}
+
 void GFilm::save(QString& filePath)
 {
+//    QImage image = GColorSpace::imageCIE1931XYZ();
+//    if(image.save(filePath))
     if(m_pImage->save(filePath))
     {
         qDebug()<<"saved succeeful.";

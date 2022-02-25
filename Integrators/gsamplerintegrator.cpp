@@ -24,9 +24,16 @@ void GSamplerIntegrator::render(const GScene &scene)
             float x = pixelSize * (i - resolutionSize.width()/2.0f + 0.5f);
             QVector2D posInFilm = QVector2D(x, y);
             GRay ray = m_pCamera->generateRay(posInFilm);
-            //光线和场景求交点
+            QColor color = this->trace(ray, scene);
+            m_pCamera->m_pFilm->setPixel(i, j, color);
         }
     }
+}
+
+QColor GSamplerIntegrator::trace(GRay& ray, const GScene &scene)
+{
+    QColor color = Qt::black;
+    return color;
 }
 
 GSamplerIntegrator::~GSamplerIntegrator()
