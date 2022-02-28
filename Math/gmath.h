@@ -15,6 +15,7 @@ class GMath
 {
 public:
     GMath();
+    static float m_pi;
     static void testDecompositionTRS();
 
     static float clamp(float);
@@ -37,6 +38,7 @@ public:
     static float randomZeroToOne();
     static float randomMinusToOne();
 
+    static QMatrix4x4 createRotateMatrix(QVector3D degree);
     static QMatrix4x4 createWorldToViewMatrix(QVector3D position, float xDegree, float yDegree, float zDegree);
     static QMatrix4x4 createWorldToViewMatrix(QVector3D position, QVector3D forward, QVector3D up);
     static QMatrix4x4 createOrthogonalMatrix(float size, float aspect, float n, float f);

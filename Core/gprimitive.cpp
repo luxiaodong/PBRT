@@ -2,5 +2,6 @@
 
 GPrimitive::GPrimitive()
 {
-
+    m_shape = nullptr;
+    m_material = nullptr;
 }

@@ -1,45 +1,63 @@
 #include "gshape.h"
 
-GShape::GShape(const QMatrix4x4* objectToWorld, const QMatrix4x4* worldToObject, bool reverseOrientation)
-    : m_objectToWorld(objectToWorld) , m_worldToObject(worldToObject) , m_reverseNormal(reverseOrientation)
+GShape::GShape()
+{}
+
+void GShape::setTransformMatrix(QVector3D pos, QVector3D degree, QVector3D scale)
 {
-    m_isSwapHandedness = objectToWorld->determinant() < 0.0f;
-//    m_shapeCount++;
+    QMatrix4x4 matT;
+    matT.translate(pos);
+    QMatrix4x4 matR = GMath::createRotateMatrix(degree);
+    QMatrix4x4 matS;
+    matS.scale(scale);
+
+    m_objectToWorld = matT*matR*matS;
+    m_worldToObject = m_objectToWorld.inverted();
 }
 
 GShape::~GShape()
 {}
 
-GBound3D GShape::worldBound() const
-{
-    //这是包围盒子整体转成世界坐标的包围盒子
-    //优化的办法是先转物体的顶点,再计算包围盒子
-    return objectBound().transform(*m_objectToWorld);
-}
+//GShape::GShape(const QMatrix4x4* objectToWorld, const QMatrix4x4* worldToObject, bool reverseOrientation)
+//    : m_objectToWorld(objectToWorld) , m_worldToObject(worldToObject) , m_reverseNormal(reverseOrientation)
+//{
+//    m_isSwapHandedness = objectToWorld->determinant() < 0.0f;
+////    m_shapeCount++;
+//}
 
-bool GShape::intersectP(const GRay &ray, bool testAlphaTexture) const
-{
-    return intersect(ray, NULL, NULL, testAlphaTexture);
-}
+//GShape::~GShape()
+//{}
 
-float GShape::pdf(const GInteraction &) const
-{
-    return 1.0/area();
-}
+//GBound3D GShape::worldBound() const
+//{
+//    //这是包围盒子整体转成世界坐标的包围盒子
+//    //优化的办法是先转物体的顶点,再计算包围盒子
+//    return objectBound().transform(*m_objectToWorld);
+//}
 
-GInteraction GShape::sample(const GInteraction& ref, const QVector2D& u, float* pdf) const
-{
-    GInteraction a;
-    return a;
-}
+//bool GShape::intersectP(const GRay &ray, bool testAlphaTexture) const
+//{
+//    return intersect(ray, NULL, NULL, testAlphaTexture);
+//}
 
-float GShape::pdf(const GInteraction& ref, const QVector3D& wi) const
-{
-    return 0.0f;
-}
+//float GShape::pdf(const GInteraction &) const
+//{
+//    return 1.0/area();
+//}
 
-float GShape::solidAngle(const QVector3D &p, int nSamples) const
-{
-    return 2.0f;
-}
+//GInteraction GShape::sample(const GInteraction& ref, const QVector2D& u, float* pdf) const
+//{
+//    GInteraction a;
+//    return a;
+//}
+
+//float GShape::pdf(const GInteraction& ref, const QVector3D& wi) const
+//{
+//    return 0.0f;
+//}
+
+//float GShape::solidAngle(const QVector3D &p, int nSamples) const
+//{
+//    return 2.0f;
+//}
 

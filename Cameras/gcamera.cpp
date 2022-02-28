@@ -21,10 +21,12 @@ QVector3D& GCamera::originPt()
 GRay GCamera::generateRay(QVector2D& posInFilm)
 {
     // 这里假设透视投影
-    QVector3D posInView = QVector3D(posInFilm.x(), posInFilm.y(), -m_focalLength);
-    QVector3D posInWorld = m_view2WorldMat*posInView;
-    QVector3D direction = (posInWorld - m_originPt).normalized();
-    return GRay(m_originPt, direction);
+//    QVector3D posInView = QVector3D(posInFilm.x(), posInFilm.y(), -m_focalLength);
+//    QVector3D posInWorld = m_view2WorldMat*posInView;
+//    QVector3D direction = (posInWorld - m_originPt).normalized();
+//    return GRay(m_originPt, direction);
+
+    return GRay(QVector3D(posInFilm.x(), posInFilm.y(), -m_focalLength), QVector3D(0,0,-1));
 }
 
 //GCamera::GCamera(const GAnimatedTransform& cameraToWorld, float shutterOpen, float shutterClose, GFilm *film, const GMedium* medium)

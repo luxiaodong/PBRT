@@ -1,12 +1,12 @@
 #ifndef GCAMERA_H
 #define GCAMERA_H
 
-#include "Core/graydifferential.h"
-#include "Core/gfilm.h"
-#include "Samplers/gsampler.h"
-#include "Core/ganimatedtransform.h"
-#include "Medium/gmedium.h"
-#include "Interactions/ginteraction.h"
+//#include "Core/graydifferential.h"
+//#include "Core/gfilm.h"
+//#include "Samplers/gsampler.h"
+//#include "Core/ganimatedtransform.h"
+//#include "Medium/gmedium.h"
+//#include "Interactions/ginteraction.h"
 
 //class GCameraSample
 //{
@@ -33,6 +33,10 @@
 //    GFilm* m_film;
 //    const GMedium *m_medium;
 //};
+
+#include "qtinclude.h"
+#include "Core/gfilm.h"
+#include "Core/gray.h"
 
 class GCamera
 {

@@ -24,16 +24,22 @@ void GSamplerIntegrator::render(const GScene &scene)
             float x = pixelSize * (i - resolutionSize.width()/2.0f + 0.5f);
             QVector2D posInFilm = QVector2D(x, y);
             GRay ray = m_pCamera->generateRay(posInFilm);
-            QColor color = this->trace(ray, scene);
-            m_pCamera->m_pFilm->setPixel(i, j, color);
+            GSpectrum spectrum = this->trace(ray, scene);
+            m_pCamera->m_pFilm->setPixel(i, j, spectrum.m_color);
         }
     }
 }
 
-QColor GSamplerIntegrator::trace(GRay& ray, const GScene &scene)
+GSpectrum GSamplerIntegrator::trace(GRay& ray, const GScene &scene)
 {
-    QColor color = Qt::black;
-    return color;
+    GSpectrum spectrum;
+    GInteraction interaction;
+    if(scene.intersect(ray, interaction) == true)
+    {
+
+    }
+
+    return spectrum;
 }
 
 GSamplerIntegrator::~GSamplerIntegrator()

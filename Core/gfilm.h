@@ -1,8 +1,7 @@
 #ifndef GFILM_H
 #define GFILM_H
 
-#include "qtinclude.h"
-#include "Filter/gfilter.h"
+//#include "Filter/gfilter.h"
 
 //class GFilm
 //{
@@ -21,6 +20,8 @@
 //    const float m_scale;
 //    const float m_maxSampleLuminance;
 //};
+
+#include "qtinclude.h"
 
 class GFilm
 {

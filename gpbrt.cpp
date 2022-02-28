@@ -30,6 +30,7 @@ void GPBRT::rendering(QString& filePath)
 GScene* GPBRT::createScene()
 {
     GScene* scene = new GScene();
+    scene->createTestScene();
     return scene;
     // 创建灯光和物体
 }

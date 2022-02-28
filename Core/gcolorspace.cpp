@@ -102,58 +102,6 @@ QVector3D GColorSpace::SRGBToCIEXYZ(QVector3D& SRGB)
 }
 
 
-
-
-QVector3D GColorSpace::xyzToRgb(QVector3D xyz)
-{
-    QMatrix4x4 m(
-                    3.240479f, -1.537150f, -0.498535f, 0.0f,
-                    -0.969256f, 1.875991f, 0.041556f, 0.0f,
-                    0.055648f, -0.204043f, 1.057311f, 0.0f,
-                    0.0f, 0.0f, 0.0f, 1.0f
-                );
-    return m*xyz;
-}
-
-QVector3D GColorSpace::rgbToXyz(QVector3D rgb)
-{
-    QMatrix4x4 m(
-                    0.412453f, 0.357580f, 0.180423f,0.0f,
-                    0.212671f, 0.715160f, 0.072169f,0.0f,
-                    0.019334f, 0.119193f, 0.950227f,0.0f,
-                    0.0f, 0.0f, 0.0f, 1.0f
-                );
-    return m*rgb;
-}
-
-float GColorSpace::gamma(float c)
-{
-    return qPow(c, 2.2);
-}
-
-QVector3D GColorSpace::linearToSrgb(QVector3D& linear)
-{
-    float r = GColorSpace::linearToSrgb(linear.x());
-    float g = GColorSpace::linearToSrgb(linear.y());
-    float b = GColorSpace::linearToSrgb(linear.z());
-    QVector3D srgb = QVector3D(r,g,b);
-    return GMath::clamp(srgb);
-}
-
-float GColorSpace::linearToSrgb(float c)
-{
-    if(c < 0.00304f) return 12.92f*c;
-    float a = 0.055f;
-    return (1.0f+a)*qPow(c, 1.0f/2.4f) - a;
-}
-
-float GColorSpace::srgbToLinear(float c)
-{
-    if(c < 0.04045f) return c/12.92f;
-    float a = 0.055f;
-    return qPow( (c+a)/(1.0f+a), 2.4f);
-}
-
 QVector3D GColorSpace::yuvToRgb(QVector3D yuv)
 {
     QMatrix4x4 m(

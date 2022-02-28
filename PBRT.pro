@@ -38,37 +38,38 @@ SOURCES += main.cpp\
     Integrators/gsamplerintegrator.cpp \
     Samplers/gsampler.cpp \
     Cameras/gcamera.cpp \
-    Integrators/gwhittedintegrator.cpp \
+#    Integrators/gwhittedintegrator.cpp \
     Core/gspectrum.cpp \
     Core/gcolorspace.cpp \
     Core/gfilm.cpp \
-    Core/graydifferential.cpp \
-    Core/ganimatedtransform.cpp \
+#    Core/graydifferential.cpp \
+#    Core/ganimatedtransform.cpp \
     Interactions/ginteraction.cpp \
-    Interactions/gsurfaceinteraction.cpp \
+#    Interactions/gsurfaceinteraction.cpp \
     Shapes/gsphere.cpp \
-    Shapes/gcylinder.cpp \
-    Shapes/gdisk.cpp \
-    Shapes/gcone.cpp \
-    Shapes/gparaboloid.cpp \
-    Shapes/ghyperboloid.cpp \
-    Shapes/gtrianglemesh.cpp \
-    Shapes/gtriangle.cpp \
-    Shapes/gcurve.cpp \
-    Core/goptions.cpp \
-    Medium/gmedium.cpp \
-    Core/gmemoryarena.cpp \
-    Medium/gmediuminterface.cpp \
-    Interactions/gmediuminteraction.cpp \
-    Medium/gphasefunction.cpp \
-    Core/gcreatefactory.cpp \
-    Filter/gfilter.cpp \
-    Filter/gboxfilter.cpp \
-    Core/gparsepbrt.cpp \
+#    Shapes/gcylinder.cpp \
+#    Shapes/gdisk.cpp \
+#    Shapes/gcone.cpp \
+#    Shapes/gparaboloid.cpp \
+#    Shapes/ghyperboloid.cpp \
+#    Shapes/gtrianglemesh.cpp \
+#    Shapes/gtriangle.cpp \
+#    Shapes/gcurve.cpp \
+#    Core/goptions.cpp \
+#    Medium/gmedium.cpp \
+#    Core/gmemoryarena.cpp \
+#    Medium/gmediuminterface.cpp \
+#    Interactions/gmediuminteraction.cpp \
+#    Medium/gphasefunction.cpp \
+#    Core/gcreatefactory.cpp \
+#    Filter/gfilter.cpp \
+#    Filter/gboxfilter.cpp \
+#    Core/gparsepbrt.cpp \
     Samplers/gpixelsampler.cpp \
     gpbrt.cpp
 
 HEADERS  += widget.h \
+    qtinclude.h \
     Math/gmath.h \
     Core/gray.h \
     Core/ggeometry.h \
@@ -82,33 +83,32 @@ HEADERS  += widget.h \
     Integrators/gsamplerintegrator.h \
     Samplers/gsampler.h \
     Cameras/gcamera.h \
-    Integrators/gwhittedintegrator.h \
+#    Integrators/gwhittedintegrator.h \
     Core/gspectrum.h \
     Core/gcolorspace.h \
     Core/gfilm.h \
-    Core/graydifferential.h \
-    Core/ganimatedtransform.h \
+#    Core/graydifferential.h \
+#    Core/ganimatedtransform.h \
     Interactions/ginteraction.h \
-    Interactions/gsurfaceinteraction.h \
+#    Interactions/gsurfaceinteraction.h \
     Shapes/gsphere.h \
-    Shapes/gcylinder.h \
-    Shapes/gdisk.h \
-    Shapes/gcone.h \
-    Shapes/gparaboloid.h \
-    Shapes/ghyperboloid.h \
-    Shapes/gtrianglemesh.h \
-    Shapes/gtriangle.h \
-    Shapes/gcurve.h \
-    Core/goptions.h \
-    qtinclude.h \
-    Medium/gmedium.h \
-    Core/gmemoryarena.h \
-    Medium/gmediuminterface.h \
-    Interactions/gmediuminteraction.h \
-    Medium/gphasefunction.h \
-    Core/gcreatefactory.h \
-    Filter/gfilter.h \
-    Filter/gboxfilter.h \
-    Core/gparsepbrt.h \
+#    Shapes/gcylinder.h \
+#    Shapes/gdisk.h \
+#    Shapes/gcone.h \
+#    Shapes/gparaboloid.h \
+#    Shapes/ghyperboloid.h \
+#    Shapes/gtrianglemesh.h \
+#    Shapes/gtriangle.h \
+#    Shapes/gcurve.h \
+#    Core/goptions.h \
+#    Medium/gmedium.h \
+#    Core/gmemoryarena.h \
+#    Medium/gmediuminterface.h \
+#    Interactions/gmediuminteraction.h \
+#    Medium/gphasefunction.h \
+#    Core/gcreatefactory.h \
+#    Filter/gfilter.h \
+#    Filter/gboxfilter.h \
+#    Core/gparsepbrt.h \
     Samplers/gpixelsampler.h \
     gpbrt.h

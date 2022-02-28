@@ -24,6 +24,4 @@
 #include <QStringList>
 #include <QChar>
 
-class GVisibilityTester{};
-
 #endif // QTINCLUDE_H

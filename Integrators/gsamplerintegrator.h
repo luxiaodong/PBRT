@@ -5,6 +5,7 @@
 #include "Integrators/gintegrator.h"
 #include "Samplers/gsampler.h"
 #include "Cameras/gcamera.h"
+#include "Core/gspectrum.h"
 
 class GSamplerIntegrator : public GIntegrator
 {
@@ -13,7 +14,7 @@ public:
     GSamplerIntegrator(GSampler* sample, GCamera* camera);
 
     virtual void render(const GScene &scene);
-    virtual QColor trace(GRay& ray, const GScene &scene);
+    virtual GSpectrum trace(GRay& ray, const GScene &scene);
     virtual ~GSamplerIntegrator();
 
 public:

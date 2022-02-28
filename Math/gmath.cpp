@@ -1,6 +1,8 @@
 #include "gmath.h"
 #include <QDebug>
 
+float GMath::m_pi = 3.1415926f;
+
 GMath::GMath()
 {
 
@@ -8,32 +10,7 @@ GMath::GMath()
 
 void GMath::testDecompositionTRS()
 {
-    float xRadians = qDegreesToRadians(30.0f);
-    float yRadians = qDegreesToRadians(45.0f);
-    float zRadians = qDegreesToRadians(60.0f);
-
-    QMatrix4x4 xMat(
-                1.0,            0.0,             0.0, 0.0,
-                0.0, qCos(xRadians), -qSin(xRadians), 0.0,
-                0.0, qSin(xRadians),  qCos(xRadians), 0.0,
-                0.0,            0.0,             0.0, 1.0
-                );
-
-    QMatrix4x4 yMat(
-                qCos(yRadians),  0.0, qSin(yRadians), 0.0,
-                0.0,             1.0,            0.0, 0.0,
-                -qSin(yRadians), 0.0, qCos(yRadians), 0.0,
-                0.0,             0.0,            0.0, 1.0
-                );
-
-    QMatrix4x4 zMat(
-                qCos(zRadians), -qSin(zRadians), 0.0, 0.0,
-                qSin(zRadians),  qCos(zRadians), 0.0, 0.0,
-                0.0,            0.0,             1.0, 0.0,
-                0.0,            0.0,             0.0, 1.0
-                );
-
-    QMatrix4x4 r = yMat*xMat*zMat;
+    QMatrix4x4 r = GMath::createRotateMatrix(QVector3D(30, 45, 60));
     QMatrix4x4 s(1,0,0,0,
                  0,0,0,0,
                  0,0,3,0,
@@ -179,11 +156,11 @@ float GMath::randomMinusToOne()
     return 2.0f*GMath::randomZeroToOne() - 1.0f;
 }
 
-QMatrix4x4 GMath::createWorldToViewMatrix(QVector3D position, float xDegree, float yDegree, float zDegree)
+QMatrix4x4 GMath::createRotateMatrix(QVector3D degree)
 {
-    float xRadians = qDegreesToRadians(xDegree);
-    float yRadians = qDegreesToRadians(yDegree);
-    float zRadians = qDegreesToRadians(zDegree);
+    float xRadians = qDegreesToRadians(degree.x());
+    float yRadians = qDegreesToRadians(degree.y());
+    float zRadians = qDegreesToRadians(degree.z());
 
     QMatrix4x4 xMat(
                 1.0,            0.0,             0.0, 0.0,
@@ -206,6 +183,12 @@ QMatrix4x4 GMath::createWorldToViewMatrix(QVector3D position, float xDegree, flo
                 0.0,            0.0,             0.0, 1.0
                 );
 
+    QMatrix4x4 mat = yMat*xMat*zMat;
+    return mat;
+}
+
+QMatrix4x4 GMath::createWorldToViewMatrix(QVector3D position, float xDegree, float yDegree, float zDegree)
+{
     QMatrix4x4 zflip(
                 1.0, 0.0,  0.0, 0.0,
                 0.0, 1.0,  0.0, 0.0,
@@ -220,7 +203,7 @@ QMatrix4x4 GMath::createWorldToViewMatrix(QVector3D position, float xDegree, flo
                 0.0, 0.0, 0.0,           1.0
                 );
 
-    QMatrix4x4 xyzMat = yMat*xMat*zMat;
+    QMatrix4x4 xyzMat = GMath::createRotateMatrix(QVector3D(xDegree, yDegree, zDegree));
     QMatrix4x4 mat = zflip*xyzMat.inverted()*pos;
     return mat;
 }

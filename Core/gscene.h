@@ -6,14 +6,16 @@
 #include "Core/gprimitive.h"
 #include "Math/gbound3d.h"
 #include "Core/gray.h"
+#include "Interactions/ginteraction.h"
 
 class GScene
 {
 public:
     GScene();
+    void createTestScene();
 
 public:
-    bool intersect(const GRay &ray) const; //检查是否与物体有交点
+    bool intersect(const GRay &ray, GInteraction &inter) const; //检查是否与物体有交点
 
 public:
     QList<GLight*> m_lights;
