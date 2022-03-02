@@ -2,6 +2,7 @@
 #include <QDebug>
 
 float GMath::m_pi = 3.1415926f;
+float GMath::m_epsilon = 0.000001f;
 
 GMath::GMath()
 {
@@ -43,6 +44,47 @@ qDebug()<<q2.toRotationMatrix();
 qDebug()<<m;
 }
 
+
+float GMath::abs(float value)
+{
+    return static_cast<float>(qAbs(static_cast<double>(value)));
+}
+
+float GMath::sqrt(float value)
+{
+    return static_cast<float>(qSqrt(static_cast<double>(value)));
+}
+
+float GMath::sin(float value)
+{
+    return static_cast<float>(qSin(static_cast<double>(value)));
+}
+
+float GMath::cos(float value)
+{
+    return static_cast<float>(qCos(static_cast<double>(value)));
+}
+
+float GMath::asin(float value)
+{
+    return static_cast<float>(qAsin(static_cast<double>(value)));
+}
+
+float GMath::tan(float value)
+{
+    return static_cast<float>(qTan(static_cast<double>(value)));
+}
+
+float GMath::acos(float value)
+{
+    return static_cast<float>(qAcos(static_cast<double>(value)));
+}
+
+float GMath::atan2(float y, float x)
+{
+    return static_cast<float>(qAtan2(static_cast<double>(y), static_cast<double>(x)));
+}
+
 float GMath::clamp(float a, float b, float t)
 {
     if(t < a) return a;
@@ -65,37 +107,37 @@ QVector3D GMath::clamp(const QVector3D& v)
 
 QVector3D GMath::toVector(const QColor& c)
 {
-    float x = c.redF();
-    float y = c.greenF();
-    float z = c.blueF();
+    float x = static_cast<float>(c.redF());
+    float y = static_cast<float>(c.greenF());
+    float z = static_cast<float>(c.blueF());
     return QVector3D(x,y,z);
 }
 
 QColor GMath::toColor(const QVector3D& v)
 {
     QVector3D cv = clamp(v);
-    int r = cv.x()*255;
-    int g = cv.y()*255;
-    int b = cv.z()*255;
+    int r = static_cast<int>(cv.x()*255);
+    int g = static_cast<int>(cv.y()*255);
+    int b = static_cast<int>(cv.z()*255);
     return QColor(r,g,b);
 }
 
 QVector2D GMath::normalToUv(const QVector3D& n)
 {
-    float theta = qAcos(n.y()); //(0, pi)
-    float phi = qAtan2(n.z(), n.x()); //(-pi, pi]
+    float theta = GMath::acos(n.y()); //(0, pi)
+    float phi = GMath::atan2(n.z(), n.x()); //(-pi, pi]
     phi += G_PI;
     return QVector2D(phi/2/G_PI , theta/G_PI);
 }
 
 QVector3D GMath::uvToNormal(const QVector2D& uv)
 {
-    float phi = 2*G_PI*uv.x();
+    float phi = 2*m_pi*uv.x();
 //    float theta = G_PI*uv.y(); // 非均匀分布
 //    float theta = qACos(1 - uv.y()); //均匀分布
 //    float theta = 2*qAcos(qSqrt(1- uv.y())); // 余弦均匀分布
-    float theta = qAcos(1 - 2*uv.y()); //余弦均匀分布,等同于上面
-    return QVector3D( qSin(theta)*qCos(phi), qSin(theta)*qSin(phi), qCos(theta));
+    float theta = GMath::acos(1 - 2*uv.y()); //余弦均匀分布,等同于上面
+    return QVector3D( GMath::sin(theta)*GMath::cos(phi), GMath::sin(theta)*GMath::sin(phi), GMath::cos(theta));
 }
 
 float GMath::lerp(float a, float b, float p)
@@ -115,8 +157,9 @@ QColor GMath::lerp(const QColor& a,const QColor& b, float p)
     QVector3D vb = GMath::toVector(b);
 
     QVector3D v = GMath::lerp(va, vb, p);
-    float w = GMath::lerp(a.alphaF(), b.alphaF(), p);
-    return QColor(v.x()*255, v.y()*255, v.z()*255, w*255);
+    float w = GMath::lerp(static_cast<float>(a.alphaF()), static_cast<float>(b.alphaF()), p);
+//    return QColor(v.x()*255, v.y()*255, v.z()*255, w*255);
+    return QColor( static_cast<int>(v.x()*255), static_cast<int>(v.y()*255), static_cast<int>(v.z()*255), static_cast<int>(w*255));
 }
 
 QVector3D GMath::min(const QVector3D& a,const QVector3D& b)
@@ -140,8 +183,8 @@ bool GMath::quadratic(float a, float b, float c, float& t0, float& t1)
     float delta = b*b - 4*a*c;
     if(delta < 0) return false;
 
-    t0 = (-b-qSqrt(delta))/(2*a);
-    t1 = (-b+qSqrt(delta))/(2*a);
+    t0 = (-b-GMath::sqrt(delta))/(2*a);
+    t1 = (-b+GMath::sqrt(delta))/(2*a);
     if(t0 > t1) qSwap(t0, t1);
     return true;
 }
@@ -164,21 +207,21 @@ QMatrix4x4 GMath::createRotateMatrix(QVector3D degree)
 
     QMatrix4x4 xMat(
                 1.0,            0.0,             0.0, 0.0,
-                0.0, qCos(xRadians), -qSin(xRadians), 0.0,
-                0.0, qSin(xRadians),  qCos(xRadians), 0.0,
+                0.0, GMath::cos(xRadians), -GMath::sin(xRadians), 0.0,
+                0.0, GMath::sin(xRadians),  GMath::cos(xRadians), 0.0,
                 0.0,            0.0,             0.0, 1.0
                 );
 
     QMatrix4x4 yMat(
-                qCos(yRadians),  0.0, qSin(yRadians), 0.0,
+                GMath::cos(yRadians),  0.0, GMath::sin(yRadians), 0.0,
                 0.0,             1.0,            0.0, 0.0,
-                -qSin(yRadians), 0.0, qCos(yRadians), 0.0,
+                -GMath::sin(yRadians), 0.0, GMath::cos(yRadians), 0.0,
                 0.0,             0.0,            0.0, 1.0
                 );
 
     QMatrix4x4 zMat(
-                qCos(zRadians), -qSin(zRadians), 0.0, 0.0,
-                qSin(zRadians),  qCos(zRadians), 0.0, 0.0,
+                GMath::cos(zRadians), -GMath::sin(zRadians), 0.0, 0.0,
+                GMath::sin(zRadians),  GMath::cos(zRadians), 0.0, 0.0,
                 0.0,            0.0,             1.0, 0.0,
                 0.0,            0.0,             0.0, 1.0
                 );
@@ -259,7 +302,7 @@ QMatrix4x4 GMath::createOrthogonalMatrix(float size, float aspect, float n, floa
 QMatrix4x4 GMath::createProjectionMatrix(float fov, float aspect, float n, float f)
 {
     // z in [-n,f]
-    float tan = qTan( qDegreesToRadians(fov/2) );
+    float tan = GMath::tan( qDegreesToRadians(fov/2) );
     QMatrix4x4 mat(
         1.0f/(aspect*tan),       0.0f,          0.0f,          0.0f,
                 0.0f,        1.0f/tan,          0.0f,          0.0f,

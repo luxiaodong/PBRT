@@ -5,8 +5,8 @@ GSphere::GSphere(float radius, float zMin, float zMax, float phiMax)
           m_radius(radius),
           m_zMin( GMath::clamp(-radius, radius, qMin(zMin, zMax)) ),
           m_zMax( GMath::clamp(-radius, radius, qMax(zMin, zMax)) ),
-          m_thetaMin( qAcos( GMath::clamp(-1,1, qMin(zMin, zMax)/radius)) ),
-          m_thetaMax( qAcos( GMath::clamp(-1,1, qMax(zMin, zMax)/radius)) ),
+          m_thetaMin( GMath::asin( GMath::clamp(-1,1, qMin(zMin, zMax)/radius)) ),
+          m_thetaMax( GMath::acos( GMath::clamp(-1,1, qMax(zMin, zMax)/radius)) ),
           m_phiMax( qDegreesToRadians(GMath::clamp(0, 360, phiMax)) )
 {
 
@@ -22,16 +22,16 @@ GBound3D GSphere::objectBound() const
     if (m_phiMax < GMath::m_pi/2)
     {
         b.m_min = QVector3D(0, 0, m_zMin);
-        b.m_max = QVector3D(m_radius, m_radius *  qSin(m_phiMax) , m_zMax);
+        b.m_max = QVector3D(m_radius, m_radius * GMath::sin(m_phiMax) , m_zMax);
     }
     else if(m_phiMax < GMath::m_pi)
     {
-        b.m_min = QVector3D(m_radius * qCos(m_phiMax), 0, m_zMin);
+        b.m_min = QVector3D(m_radius * GMath::cos(m_phiMax), 0, m_zMin);
         b.m_max = QVector3D(m_radius, m_radius, m_zMax);
     }
     else if(m_phiMax < 3.0f*GMath::m_pi/2)
     {
-        b.m_min = QVector3D(-m_radius, m_radius * qSin(m_phiMax), m_zMin);
+        b.m_min = QVector3D(-m_radius, m_radius * GMath::sin(m_phiMax), m_zMin);
         b.m_max = QVector3D(m_radius, m_radius, m_zMax);
     }
     else
@@ -43,8 +43,10 @@ GBound3D GSphere::objectBound() const
     return b;
 }
 
-bool GSphere::intersect(const GRay &ray, float *tHit, GInteraction *isect) const
+bool GSphere::intersect(const GRay &ray, GInteraction &inter, float &tHit) const
 {
+//qDebug()<<ray.m_origin;
+//qDebug()<<ray.m_direction;
     GRay objRay = ray.transform(m_worldToObject);
 
     // x^2 + y^2 + z^2 = r^2;
@@ -58,8 +60,9 @@ bool GSphere::intersect(const GRay &ray, float *tHit, GInteraction *isect) const
     if( GMath::quadratic(a,b,c,t0,t1) == false ) return false;
 
     if(t0 > objRay.m_max || t1 < 0) return false;
+
     float hitT;
-    float phi;
+    float phi = 0.0f;
     if(t0 > 0 && this->isValidPointInSphere(objRay(t0), phi))
     {
         hitT = t0;
@@ -73,21 +76,27 @@ bool GSphere::intersect(const GRay &ray, float *tHit, GInteraction *isect) const
         return false;
     }
 
-    tHit = &hitT;
-
-//    QVector3D hitPoint = objRay(hitT);
+    QVector3D hitPoint = objRay(hitT);
     // 计算该点的偏导数, uv要在(0,1)内
     // u: 0 < phi < phiMax
     // v: zMin < cos(theta) < zMax
 
-//    float u = phi/m_phiMax;
-//    float theta = qAcos( GMath::clamp(hitPoint.z()/m_radius) );
-//    float v = (theta - m_thetaMin)/(m_thetaMax - m_thetaMin);
-//    float zRadius = qSqrt(hitPoint.x()*hitPoint.x() + hitPoint.y()*hitPoint.y());
-//    float cosPhi = hitPoint.x()/zRadius;
-//    float sinPhi = hitPoint.y()/zRadius;
-//    QVector3D dpdu( (-m_phiMax) * hitPoint.y(), m_phiMax * hitPoint.x(), 0);
-//    QVector3D dpdv = (m_thetaMax - m_thetaMin) * QVector3D(hitPoint.z()*cosPhi, hitPoint.z()*sinPhi, -m_radius*qSin(theta));
+    float u = phi/m_phiMax;
+    float theta = GMath::acos(GMath::clamp(hitPoint.z()/m_radius) );
+    float v = (theta - m_thetaMin)/(m_thetaMax - m_thetaMin);
+    float zRadius = GMath::sqrt(hitPoint.x()*hitPoint.x() + hitPoint.y()*hitPoint.y());
+    float cosPhi = hitPoint.x()/zRadius;
+    float sinPhi = hitPoint.y()/zRadius;
+    QVector3D dpdu( (-m_phiMax) * hitPoint.y(), m_phiMax * hitPoint.x(), 0);
+    QVector3D dpdv = (m_thetaMax - m_thetaMin) * QVector3D(hitPoint.z()*cosPhi, hitPoint.z()*sinPhi, -m_radius*GMath::sin(theta));
+
+    GInteraction interaction;
+    interaction.m_uv = QVector2D(u, v);
+    interaction.m_point = objRay(hitT);
+    interaction.m_normal = QVector3D::crossProduct(dpdu, dpdv);
+
+    tHit = hitT;
+    inter = interaction.transform(m_objectToWorld);
     return true;
 }
 
@@ -125,11 +134,12 @@ bool GSphere::intersect(const GRay &ray, float *tHit, GInteraction *isect) const
 
 bool GSphere::isValidPointInSphere(const QVector3D p, float& phi) const
 {
-    phi = static_cast<float>(qAtan2( static_cast<double>(p.y()) , static_cast<double>(p.x())));
+    phi = GMath::atan2(p.y(), p.x());
     if(phi < 0) phi += 2*GMath::m_pi;
 
-    if(phi < m_phiMax && m_zMin < p.z() && p.z() < m_zMax)
+    if(phi < m_phiMax && m_zMin <= p.z() && p.z() <= m_zMax)
     {
+//qDebug()<<m_zMin<<p<<m_zMax;
         return true;
     }
 

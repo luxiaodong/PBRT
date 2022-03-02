@@ -91,7 +91,7 @@ bool GBound3D::intersectP(const GRay& ray, float* hitt0, float* hitt1) const
     float t0 = 0, t1 = ray.m_max;
     for(int i = 0; i < 3; ++i)
     {
-        if(ray.m_direction[i]!= 0)
+        if( GMath::abs(ray.m_direction[i]) < GMath::m_epsilon)
         {
             float tNear = (m_min[i] - ray.m_origin[i])/ray.m_direction[i];
             float tFar  = (m_max[i] - ray.m_origin[i])/ray.m_direction[i];
@@ -108,10 +108,10 @@ bool GBound3D::intersectP(const GRay& ray, float* hitt0, float* hitt1) const
     return true;
 }
 
-bool GBound3D::intersectP(const GRay& ray, const QVector3D& invDIr, const int dirInNeg[3]) const
-{
-    return false;
-}
+//bool GBound3D::intersectP(const GRay& ray, const QVector3D& invDIr, const int dirInNeg[3]) const
+//{
+//    return false;
+//}
 
 GBound3D GBound3D::transform(const QMatrix4x4& m) const
 {

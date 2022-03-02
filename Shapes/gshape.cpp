@@ -3,6 +3,9 @@
 GShape::GShape()
 {}
 
+GShape::~GShape()
+{}
+
 void GShape::setTransformMatrix(QVector3D pos, QVector3D degree, QVector3D scale)
 {
     QMatrix4x4 matT;
@@ -11,12 +14,16 @@ void GShape::setTransformMatrix(QVector3D pos, QVector3D degree, QVector3D scale
     QMatrix4x4 matS;
     matS.scale(scale);
 
-    m_objectToWorld = matT*matR*matS;
+    QMatrix4x4 coord(
+                1.0f, 0.0f, 0.0f, 0.0f,
+                0.0f, 0.0f, 1.0f, 0.0f,
+                0.0f, 1.0f, 0.0f, 0.0f,
+                0.0f, 0.0f, 0.0f, 1.0f
+                );
+
+    m_objectToWorld = matT*matR*matS*coord;
     m_worldToObject = m_objectToWorld.inverted();
 }
-
-GShape::~GShape()
-{}
 
 //GShape::GShape(const QMatrix4x4* objectToWorld, const QMatrix4x4* worldToObject, bool reverseOrientation)
 //    : m_objectToWorld(objectToWorld) , m_worldToObject(worldToObject) , m_reverseNormal(reverseOrientation)

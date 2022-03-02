@@ -16,7 +16,17 @@ class GMath
 public:
     GMath();
     static float m_pi;
+    static float m_epsilon;
     static void testDecompositionTRS();
+
+    static float abs(float value);
+    static float sqrt(float value);
+    static float sin(float value);
+    static float cos(float value);
+    static float tan(float value);
+    static float asin(float value);
+    static float acos(float value);
+    static float atan2(float y, float x);
 
     static float clamp(float);
     static float clamp(float a, float b, float t);

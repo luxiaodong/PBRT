@@ -5,7 +5,6 @@
 #include "Math/gmath.h"
 #include "Math/gbound3d.h"
 #include "Interactions/ginteraction.h"
-// #include "Interactions/gsurfaceinteraction.h"
 
 //class GShape
 //{
@@ -36,9 +35,9 @@ class GShape
 public:
     GShape();
     virtual ~GShape();
+    void setTransformMatrix(QVector3D pos, QVector3D degree, QVector3D scale);
     virtual GBound3D objectBound() const = 0;
-    virtual void setTransformMatrix(QVector3D pos, QVector3D degree, QVector3D scale);
-    virtual bool intersect(const GRay &ray, float *tHit, GInteraction *isect) const = 0;
+    virtual bool intersect(const GRay &ray, GInteraction &inter, float &tHit) const = 0;
 
 public:
     QMatrix4x4 m_objectToWorld;

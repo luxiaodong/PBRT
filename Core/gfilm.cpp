@@ -19,7 +19,8 @@
 
 GFilm::GFilm()
 {
-    m_resolution = QSize(1024, 1024);
+    m_resolution = QSize(1024,1024);
+//    m_resolution = QSize(2, 2);
     m_pixelSize = 0.01f;
     m_pImage = new QImage(m_resolution, QImage::Format_RGBA8888);
     m_pImage->fill(Qt::black);

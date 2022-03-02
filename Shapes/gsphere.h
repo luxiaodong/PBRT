@@ -10,7 +10,7 @@ public:
     ~GSphere();
     GSphere(float radius, float zMin, float zMax, float phiMax);
     GBound3D objectBound() const;
-    bool intersect(const GRay &ray, float *tHit, GInteraction *isect) const;
+    bool intersect(const GRay &ray, GInteraction &inter, float &tHit) const;
 
 //    bool intersect(const GRay &ray, float *tHit, GInteraction *isect, bool testAlphaTexture = true) const;
 //    bool intersectP(const GRay &ray, bool testAlphaTexture = true) const;

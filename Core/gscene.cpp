@@ -10,11 +10,32 @@ GScene::GScene()
 void GScene::createTestScene()
 {
     GPrimitive* pri = new GPrimitive();
-    pri->m_shape = new GSphere(3.0,-100, 100, 100);
+    pri->m_shape = new GSphere(3.0, -3.0, 3.0, 360);
+    pri->m_shape->setTransformMatrix(QVector3D(0,0,5),QVector3D(0,0,0), QVector3D(1,1,1));
     m_primitives.append(pri);
 }
 
 bool GScene::intersect(const GRay &ray, GInteraction &inter) const
 {
-    return false;
+    float nearT = 100.0f;
+    GInteraction nearInter;
+    bool ret = false;
+    foreach(GPrimitive* pri, m_primitives)
+    {
+        float t;
+        GInteraction temp;
+        if( pri->m_shape->intersect(ray, temp, t) )
+        {
+            if(t < nearT)
+            {
+                nearT = t;
+                nearInter = temp;
+                nearInter.m_pPrimitive = pri;
+                ret = true;
+            }
+        }
+    }
+
+    inter = nearInter;
+    return ret;
 }

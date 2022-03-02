@@ -26,7 +26,7 @@ GRay GCamera::generateRay(QVector2D& posInFilm)
 //    QVector3D direction = (posInWorld - m_originPt).normalized();
 //    return GRay(m_originPt, direction);
 
-    return GRay(QVector3D(posInFilm.x(), posInFilm.y(), -m_focalLength), QVector3D(0,0,-1));
+    return GRay(QVector3D(posInFilm.x(), posInFilm.y(), -m_focalLength), QVector3D(0,0,1));
 }
 
 //GCamera::GCamera(const GAnimatedTransform& cameraToWorld, float shutterOpen, float shutterClose, GFilm *film, const GMedium* medium)
