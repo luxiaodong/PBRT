@@ -24,7 +24,7 @@ void GSamplerIntegrator::render(const GScene &scene)
             QVector2D posInFilm = QVector2D(x, y);
             GRay ray = m_pCamera->generateRay(posInFilm);
             GSpectrum spectrum = this->trace(ray, scene);
-            QColor color = GMath::toColor(spectrum.toRGB());
+            QColor color = GMath::toColor(spectrum.toSRGB());
             m_pCamera->m_pFilm->setPixel(i, j, color);
         }
     }

@@ -115,6 +115,12 @@ QVector3D GSpectrum::toRGB() const
     return GColorSpace::CIEXYZToRGB(xyz);
 }
 
+QVector3D GSpectrum::toSRGB() const
+{
+    QVector3D xyz = this->toXYZ();
+    return GColorSpace::CIEXYZToSRGB(xyz);
+}
+
 // https://zhuanlan.zhihu.com/p/54910283
 float GSpectrum::averageSamples(const float *lambda, const float *vals, int n, float lambdaStart, float lambdaEnd)
 {

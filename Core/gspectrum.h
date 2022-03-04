@@ -17,6 +17,7 @@ public:
     static float averageSamples(const float *lambda, const float *vals, int n, float lambdaStart, float lambdaEnd);
     QVector3D toXYZ() const; //给定m_coefficient,对m_XYZ求积分
     QVector3D toRGB() const; //先转XYZ,再转RGB
+    QVector3D toSRGB() const; //比RGB多了一步gamma矫正
 
     float &operator[](int i);
     float operator[](int i) const;
