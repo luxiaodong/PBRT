@@ -1,7 +1,7 @@
 #include "gspectrum.h"
 #include "Math/gmath.h"
 
-QVector3D _XYZ[GColorSpace::m_SpectralSamples];
+static QVector3D _XYZ[GColorSpace::m_SpectralSamples];
 
 GSpectrum::GSpectrum()
 {
@@ -9,8 +9,6 @@ GSpectrum::GSpectrum()
     {
         m_coefficient[i] = 0.0f;
     }
-
-    m_color = Qt::black;
 }
 
 GSpectrum::GSpectrum(float c)
@@ -119,6 +117,16 @@ QVector3D GSpectrum::toSRGB() const
 {
     QVector3D xyz = this->toXYZ();
     return GColorSpace::CIEXYZToSRGB(xyz);
+}
+
+bool GSpectrum::isBlack()
+{
+    for(int i = 0; i < GColorSpace::m_SpectralSamples; ++i)
+    {
+        if(m_coefficient[i] > 0.0f) return false;
+    }
+
+    return true;
 }
 
 // https://zhuanlan.zhihu.com/p/54910283

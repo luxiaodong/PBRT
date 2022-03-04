@@ -13,6 +13,11 @@ void GScene::createTestScene()
     pri->m_shape = new GSphere(3.0, -3.0, 3.0, 360);
     pri->m_shape->setTransformMatrix(QVector3D(0,0,5),QVector3D(0,0,0), QVector3D(1,1,1));
     m_primitives.append(pri);
+
+    GLight* light = new GLight();
+    light->setTransformMatrix(QVector3D(0,0,-5));
+    light->m_spectrum = GSpectrum(1.0f);
+    m_lights.append(light);
 }
 
 bool GScene::intersect(const GRay &ray, GInteraction &inter) const

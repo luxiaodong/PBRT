@@ -19,6 +19,7 @@ public:
     static const int m_SpectralSamples = 60;
     static const int m_SampledLambdaStart = 400;
     static const int m_SampledLambdaEnd = 700;
+    static float m_RGBRefl2SpectYellow[m_RGB2SpectSamples];
 
     static QVector3D CIExyYToCIEXYZ(QVector3D& xyY);
     static QVector3D CIEXYZToCIExyY(QVector3D& XYZ);

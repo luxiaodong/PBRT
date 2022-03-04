@@ -18,6 +18,7 @@ public:
     QVector3D toXYZ() const; //给定m_coefficient,对m_XYZ求积分
     QVector3D toRGB() const; //先转XYZ,再转RGB
     QVector3D toSRGB() const; //比RGB多了一步gamma矫正
+    bool isBlack();
 
     float &operator[](int i);
     float operator[](int i) const;
@@ -29,9 +30,6 @@ public:
 
 public:
     float m_coefficient[GColorSpace::m_SpectralSamples]; //spd 光谱分布的系数
-
-private:
-    QColor m_color;
 };
 
 

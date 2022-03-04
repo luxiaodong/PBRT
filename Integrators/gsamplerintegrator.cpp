@@ -40,13 +40,23 @@ GSpectrum GSamplerIntegrator::trace(GRay& ray, const GScene &scene)
 {
     GSpectrum spectrum;
     GInteraction interaction;
-    if(scene.intersect(ray, interaction) == false)
+    if(scene.intersect(ray, interaction) == false) //跟场景没有交点
     {
         return spectrum;
     }
 
-    //计算着色
-    spectrum += GSpectrum(1.0f);
+    //计算着色,遍历每盏灯
+    foreach(GLight* light, scene.m_lights)
+    {
+        GSpectrum ls = light->m_spectrum; //源代码是采样计算出来的
+        if(ls.isBlack()) continue; //没有颜色
+        // 这里要计算brdf的系数f
+        // pdf是什么
+        GSpectrum f(1.0f);
+        QVector3D wi = light->direction(interaction.m_point);
+        spectrum += f * ls * GMath::abs( QVector3D::dotProduct(wi, interaction.m_normal) );
+    }
+
     return spectrum;
 }
 
