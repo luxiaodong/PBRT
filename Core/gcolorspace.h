@@ -9,9 +9,22 @@ class GColorSpace
 {
 public:
     GColorSpace();
+    static const int m_CIESamples = 471;
+    static float m_CIEX[m_CIESamples];
+    static float m_CIEY[m_CIESamples];
+    static float m_CIEZ[m_CIESamples];
+    static float m_CIELambda[m_CIESamples];
+    static constexpr float m_CIE_Y_Integral = 106.856895f;
+    static const int m_RGB2SpectSamples = 32;
+    static const int m_SpectralSamples = 60;
+    static const int m_SampledLambdaStart = 400;
+    static const int m_SampledLambdaEnd = 700;
 
     static QVector3D CIExyYToCIEXYZ(QVector3D& xyY);
     static QVector3D CIEXYZToCIExyY(QVector3D& XYZ);
+
+    static QVector3D CIEXYZToRGB(QVector3D& XYZ);
+    static QVector3D RGBToCIEXYZ(QVector3D& RGB);
 
     static QVector3D CIEXYZToSRGB(QVector3D& XYZ);
     static QVector3D SRGBToCIEXYZ(QVector3D& SRGB);

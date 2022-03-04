@@ -24,17 +24,16 @@ void GSamplerIntegrator::render(const GScene &scene)
             QVector2D posInFilm = QVector2D(x, y);
             GRay ray = m_pCamera->generateRay(posInFilm);
             GSpectrum spectrum = this->trace(ray, scene);
-            m_pCamera->m_pFilm->setPixel(i, j, spectrum.m_color);
+            QColor color = GMath::toColor(spectrum.toRGB());
+            m_pCamera->m_pFilm->setPixel(i, j, color);
         }
     }
 
-//    QVector2D posInFilm = QVector2D(1, 1);
+//    QVector2D posInFilm = QVector2D(0, 0);
 //    GRay ray = m_pCamera->generateRay(posInFilm);
-//qDebug()<<ray.m_origin;
-//qDebug()<<ray.m_direction;
 //    GSpectrum spectrum = this->trace(ray, scene);
-//    m_pCamera->m_pFilm->setPixel(1, 1, spectrum.m_color);
-
+//    QColor color = GMath::toColor(spectrum.toRGB());
+//    m_pCamera->m_pFilm->setPixel(1, 1, color);
 }
 
 GSpectrum GSamplerIntegrator::trace(GRay& ray, const GScene &scene)
@@ -46,9 +45,8 @@ GSpectrum GSamplerIntegrator::trace(GRay& ray, const GScene &scene)
         return spectrum;
     }
 
-    //点找到了,开始着色.
-
-    spectrum.m_color = Qt::white;
+    //计算着色
+    spectrum += GSpectrum(1.0f);
     return spectrum;
 }
 

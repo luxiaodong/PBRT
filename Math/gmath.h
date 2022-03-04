@@ -1,8 +1,6 @@
 #ifndef GMATH_H
 #define GMATH_H
 
-#define G_PI 3.1415926f
-
 #include <QVector2D>
 #include <QVector3D>
 #include <QMatrix>
@@ -15,12 +13,18 @@ class GMath
 {
 public:
     GMath();
-    static float m_pi;
-    static float m_epsilon;
+    static constexpr float m_pi = 3.1415926f;
+    static constexpr float m_epsilon = 0.000001f;
+    static constexpr float m_maxFloat = std::numeric_limits<float>::max();
+    //static PBRT_CONSTEXPR Float Infinity = std::numeric_limits<Float>::infinity();
+
     static void testDecompositionTRS();
 
+    static float min(float a, float b);
+    static float max(float a, float b);
     static float abs(float value);
     static float sqrt(float value);
+    static float pow(float x, float y);
     static float sin(float value);
     static float cos(float value);
     static float tan(float value);

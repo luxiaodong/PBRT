@@ -1,8 +1,6 @@
 #include "gmath.h"
 #include <QDebug>
 
-float GMath::m_pi = 3.1415926f;
-float GMath::m_epsilon = 0.000001f;
 
 GMath::GMath()
 {
@@ -44,7 +42,6 @@ qDebug()<<q2.toRotationMatrix();
 qDebug()<<m;
 }
 
-
 float GMath::abs(float value)
 {
     return static_cast<float>(qAbs(static_cast<double>(value)));
@@ -53,6 +50,12 @@ float GMath::abs(float value)
 float GMath::sqrt(float value)
 {
     return static_cast<float>(qSqrt(static_cast<double>(value)));
+}
+
+float GMath::pow(float x, float y)
+{
+    return static_cast<float>(qPow(static_cast<double>(x),static_cast<double>(y)));
+
 }
 
 float GMath::sin(float value)
@@ -126,13 +129,13 @@ QVector2D GMath::normalToUv(const QVector3D& n)
 {
     float theta = GMath::acos(n.y()); //(0, pi)
     float phi = GMath::atan2(n.z(), n.x()); //(-pi, pi]
-    phi += G_PI;
-    return QVector2D(phi/2/G_PI , theta/G_PI);
+    phi += GMath::m_pi;
+    return QVector2D(phi/2/GMath::m_pi , theta/GMath::m_pi);
 }
 
 QVector3D GMath::uvToNormal(const QVector2D& uv)
 {
-    float phi = 2*m_pi*uv.x();
+    float phi = 2*GMath::m_pi*uv.x();
 //    float theta = G_PI*uv.y(); // 非均匀分布
 //    float theta = qACos(1 - uv.y()); //均匀分布
 //    float theta = 2*qAcos(qSqrt(1- uv.y())); // 余弦均匀分布

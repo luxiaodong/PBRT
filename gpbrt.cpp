@@ -12,6 +12,7 @@ GPBRT::GPBRT()
 
 void GPBRT::init()
 {
+    GSpectrum::init();
     m_pFilm = new GFilm();
     m_pScene = this->createScene();
     m_pCamera = this->createCamera();
