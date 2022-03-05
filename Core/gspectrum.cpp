@@ -1,7 +1,21 @@
 #include "gspectrum.h"
 #include "Math/gmath.h"
 
-static QVector3D _XYZ[GColorSpace::m_SpectralSamples];
+QVector3D GSpectrum::m_XYZ[GColorSpace::m_SpectralSamples];
+GSpectrum GSpectrum::m_rgbRefl2SpectWhite;
+GSpectrum GSpectrum::m_rgbRefl2SpectCyan;
+GSpectrum GSpectrum::m_rgbRefl2SpectMagenta;
+GSpectrum GSpectrum::m_rgbRefl2SpectYellow;
+GSpectrum GSpectrum::m_rgbRefl2SpectRed;
+GSpectrum GSpectrum::m_rgbRefl2SpectGreen;
+GSpectrum GSpectrum::m_rgbRefl2SpectBlue;
+GSpectrum GSpectrum::m_rgbIllum2SpectWhite;
+GSpectrum GSpectrum::m_rgbIllum2SpectCyan;
+GSpectrum GSpectrum::m_rgbIllum2SpectMagenta;
+GSpectrum GSpectrum::m_rgbIllum2SpectYellow;
+GSpectrum GSpectrum::m_rgbIllum2SpectRed;
+GSpectrum GSpectrum::m_rgbIllum2SpectGreen;
+GSpectrum GSpectrum::m_rgbIllum2SpectBlue;
 
 GSpectrum::GSpectrum()
 {
@@ -91,7 +105,22 @@ void GSpectrum::init()
         float x = averageSamples(GColorSpace::m_CIELambda, GColorSpace::m_CIEX, GColorSpace::m_CIESamples, left, right);
         float y = averageSamples(GColorSpace::m_CIELambda, GColorSpace::m_CIEY, GColorSpace::m_CIESamples, left, right);
         float z = averageSamples(GColorSpace::m_CIELambda, GColorSpace::m_CIEZ, GColorSpace::m_CIESamples, left, right);
-        _XYZ[i] = QVector3D(x,y,z);
+        m_XYZ[i] = QVector3D(x,y,z);
+
+        m_rgbRefl2SpectWhite.m_coefficient[i] = averageSamples(GColorSpace::m_RGB2SpectLambda, GColorSpace::m_RGBRefl2SpectWhite, GColorSpace::m_RGB2SpectSamples, left, right);
+        m_rgbRefl2SpectCyan.m_coefficient[i] = averageSamples(GColorSpace::m_RGB2SpectLambda, GColorSpace::m_RGBRefl2SpectCyan, GColorSpace::m_RGB2SpectSamples, left, right);
+        m_rgbRefl2SpectMagenta.m_coefficient[i] = averageSamples(GColorSpace::m_RGB2SpectLambda, GColorSpace::m_RGBRefl2SpectMagenta, GColorSpace::m_RGB2SpectSamples, left, right);
+        m_rgbRefl2SpectYellow.m_coefficient[i] = averageSamples(GColorSpace::m_RGB2SpectLambda, GColorSpace::m_RGBRefl2SpectYellow, GColorSpace::m_RGB2SpectSamples, left, right);
+        m_rgbRefl2SpectRed.m_coefficient[i] = averageSamples(GColorSpace::m_RGB2SpectLambda, GColorSpace::m_RGBRefl2SpectRed, GColorSpace::m_RGB2SpectSamples, left, right);
+        m_rgbRefl2SpectGreen.m_coefficient[i] = averageSamples(GColorSpace::m_RGB2SpectLambda, GColorSpace::m_RGBRefl2SpectGreen, GColorSpace::m_RGB2SpectSamples, left, right);
+        m_rgbRefl2SpectBlue.m_coefficient[i] = averageSamples(GColorSpace::m_RGB2SpectLambda, GColorSpace::m_RGBRefl2SpectBlue, GColorSpace::m_RGB2SpectSamples, left, right);
+        m_rgbIllum2SpectWhite.m_coefficient[i] = averageSamples(GColorSpace::m_RGB2SpectLambda, GColorSpace::m_RGBIllum2SpectWhite, GColorSpace::m_RGB2SpectSamples, left, right);
+        m_rgbIllum2SpectCyan.m_coefficient[i] = averageSamples(GColorSpace::m_RGB2SpectLambda, GColorSpace::m_RGBIllum2SpectCyan, GColorSpace::m_RGB2SpectSamples, left, right);
+        m_rgbIllum2SpectMagenta.m_coefficient[i] = averageSamples(GColorSpace::m_RGB2SpectLambda, GColorSpace::m_RGBIllum2SpectMagenta, GColorSpace::m_RGB2SpectSamples, left, right);
+        m_rgbIllum2SpectYellow.m_coefficient[i] = averageSamples(GColorSpace::m_RGB2SpectLambda, GColorSpace::m_RGBIllum2SpectYellow, GColorSpace::m_RGB2SpectSamples, left, right);
+        m_rgbIllum2SpectRed.m_coefficient[i] = averageSamples(GColorSpace::m_RGB2SpectLambda, GColorSpace::m_RGBIllum2SpectRed, GColorSpace::m_RGB2SpectSamples, left, right);
+        m_rgbIllum2SpectGreen.m_coefficient[i] = averageSamples(GColorSpace::m_RGB2SpectLambda, GColorSpace::m_RGBIllum2SpectGreen, GColorSpace::m_RGB2SpectSamples, left, right);
+        m_rgbIllum2SpectBlue.m_coefficient[i] = averageSamples(GColorSpace::m_RGB2SpectLambda, GColorSpace::m_RGBIllum2SpectBlue, GColorSpace::m_RGB2SpectSamples, left, right);
     }
 }
 
@@ -100,7 +129,7 @@ QVector3D GSpectrum::toXYZ() const
     QVector3D xyz(0,0,0);
     for(int i = 0; i < GColorSpace::m_SpectralSamples; ++i)
     {
-        xyz += m_coefficient[i] * _XYZ[i];
+        xyz += m_coefficient[i] * m_XYZ[i];
     }
 
     float scale = (GColorSpace::m_SampledLambdaEnd - GColorSpace::m_SampledLambdaStart)/( GColorSpace::m_CIE_Y_Integral * GColorSpace::m_SpectralSamples);
