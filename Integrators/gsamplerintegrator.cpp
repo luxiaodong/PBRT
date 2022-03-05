@@ -45,6 +45,10 @@ GSpectrum GSamplerIntegrator::trace(GRay& ray, const GScene &scene)
         return spectrum;
     }
 
+    //计算材质上的
+
+    //命中的是区域光
+
     //计算着色,遍历每盏灯
     foreach(GLight* light, scene.m_lights)
     {
@@ -52,7 +56,7 @@ GSpectrum GSamplerIntegrator::trace(GRay& ray, const GScene &scene)
         if(ls.isBlack()) continue; //没有颜色
         // 这里要计算brdf的系数f
         // pdf是什么
-        GSpectrum f(1.0f);
+        GSpectrum f = GSpectrum::m_rgbRefl2SpectCyan;
         QVector3D wi = light->direction(interaction.m_point);
         spectrum += f * ls * GMath::abs( QVector3D::dotProduct(wi, interaction.m_normal) );
     }

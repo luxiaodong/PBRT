@@ -193,3 +193,101 @@ float GSpectrum::averageSamples(const float *lambda, const float *vals, int n, f
     return sum/(lambdaEnd - lambdaStart);
 }
 
+GSpectrum GSpectrum::fromRGB(QVector3D rgb, bool isIlluminant)
+{
+    GSpectrum s;
+    float r = rgb.x();
+    float g = rgb.y();
+    float b = rgb.z();
+
+    if(isIlluminant)
+    {
+        if(r <= g && r <= b)
+        {
+            s += GSpectrum::m_rgbIllum2SpectWhite * r;
+            if( g <= b)
+            {
+                s += GSpectrum::m_rgbIllum2SpectCyan * (g - r);
+                s += GSpectrum::m_rgbIllum2SpectBlue * (b - g);
+            }
+            else
+            {
+                s += GSpectrum::m_rgbIllum2SpectCyan * (b - r);
+                s += GSpectrum::m_rgbIllum2SpectGreen * (g - b);
+            }
+        }
+        else if(g <= r && g <= b)
+        {
+            s += GSpectrum::m_rgbIllum2SpectWhite * g;
+            if (r <= b)
+            {
+                s += GSpectrum::m_rgbIllum2SpectMagenta * (r - g);
+                s += GSpectrum::m_rgbIllum2SpectBlue * (b - r);
+            }
+            else
+            {
+                s += GSpectrum::m_rgbIllum2SpectMagenta * (b - g);
+                s += GSpectrum::m_rgbIllum2SpectRed * (r - b);
+            }
+        }
+        else
+        {
+            s += GSpectrum::m_rgbIllum2SpectWhite * b;
+            if (r <= g) {
+                s += GSpectrum::m_rgbIllum2SpectYellow * (r - b);
+                s += GSpectrum::m_rgbIllum2SpectGreen * (g - r);
+            } else {
+                s += GSpectrum::m_rgbIllum2SpectYellow * (g - b);
+                s += GSpectrum::m_rgbIllum2SpectRed * (r - g);
+            }
+        }
+
+        s *= 0.86445f;
+    }
+    else
+    {
+        if(r <= g && r <= b)
+        {
+            s += GSpectrum::m_rgbRefl2SpectWhite * r;
+            if( g <= b)
+            {
+                s += GSpectrum::m_rgbRefl2SpectCyan * (g - r);
+                s += GSpectrum::m_rgbRefl2SpectBlue * (b - g);
+            }
+            else
+            {
+                s += GSpectrum::m_rgbRefl2SpectCyan * (b - r);
+                s += GSpectrum::m_rgbRefl2SpectGreen * (g - b);
+            }
+        }
+        else if(g <= r && g <= b)
+        {
+            s += GSpectrum::m_rgbRefl2SpectWhite * g;
+            if (r <= b)
+            {
+                s += GSpectrum::m_rgbRefl2SpectMagenta * (r - g);
+                s += GSpectrum::m_rgbRefl2SpectBlue * (b - r);
+            }
+            else
+            {
+                s += GSpectrum::m_rgbRefl2SpectMagenta * (b - g);
+                s += GSpectrum::m_rgbRefl2SpectRed * (r - b);
+            }
+        }
+        else
+        {
+            s += GSpectrum::m_rgbRefl2SpectWhite * b;
+            if (r <= g) {
+                s += GSpectrum::m_rgbRefl2SpectYellow * (r - b);
+                s += GSpectrum::m_rgbRefl2SpectGreen * (g - r);
+            } else {
+                s += GSpectrum::m_rgbRefl2SpectYellow * (g - b);
+                s += GSpectrum::m_rgbRefl2SpectRed * (r - g);
+            }
+        }
+
+        s *= 0.94f;
+    }
+
+    return s;
+}

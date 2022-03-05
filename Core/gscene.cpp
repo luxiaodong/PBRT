@@ -16,7 +16,8 @@ void GScene::createTestScene()
 
     GLight* light = new GLight();
     light->setTransformMatrix(QVector3D(0,0,-5));
-    light->m_spectrum = GSpectrum::m_rgbRefl2SpectCyan;
+    light->m_spectrum = GSpectrum::m_rgbIllum2SpectWhite;
+//    light->m_spectrum = GSpectrum::fromRGB(QVector3D(1,1,1), true);
     m_lights.append(light);
 }
 

@@ -28,6 +28,8 @@ public:
     GSpectrum &operator*=(const GSpectrum &s1);
     GSpectrum operator*(const GSpectrum &s1) const;
 
+    static GSpectrum fromRGB(QVector3D rgb, bool isIlluminant);
+
 public:
     float m_coefficient[GColorSpace::m_SpectralSamples]; //spd 光谱分布的系数
 
