@@ -68,7 +68,9 @@ SOURCES += main.cpp\
 #    Filter/gboxfilter.cpp \
 #    Core/gparsepbrt.cpp \
     Samplers/gpixelsampler.cpp \
-    gpbrt.cpp
+    gpbrt.cpp \
+    Math/gbezier.cpp \
+    Math/gbspline.cpp
 
 HEADERS  += widget.h \
     qtinclude.h \
@@ -113,4 +115,6 @@ HEADERS  += widget.h \
 #    Filter/gboxfilter.h \
 #    Core/gparsepbrt.h \
     Samplers/gpixelsampler.h \
-    gpbrt.h
+    gpbrt.h \
+    Math/gbezier.h \
+    Math/gbspline.h
